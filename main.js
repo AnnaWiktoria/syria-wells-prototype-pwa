@@ -337,15 +337,13 @@ const wells = [
             CORE FUNCTIONS (GLOBAL SCOPE)
 ----------------------------*/
 
-// 1. ADD NEW WELL FUNCTION (Moved to top)
+// 1. ADD NEW WELL FUNCTION
 function handleMapTapForNewWell(e) {
 	if (tempMarker) {
 		map.removeLayer(tempMarker);
 	}
 
-	tempMarker = L.marker(e.latlng, { icon: ICON_BLUE, draggable: true }).addTo(
-		map
-	);
+	tempMarker = L.marker(e.latlng, { icon: ICON_BLUE, draggable: true }).addTo(map);
 
 	tempMarker.on("dragend", function (event) {
 		const marker = event.target;
@@ -354,7 +352,7 @@ function handleMapTapForNewWell(e) {
 	});
 
 	currentWellCoords = [e.latlng.lat, e.latlng.lng];
-	// Użycie setTimeout dla pewności
+	// Small delay to ensure modal is ready
 	setTimeout(() => {
 		openModal("Tapped Location", "", [e.latlng.lat, e.latlng.lng]);
 	}, 100);
@@ -500,7 +498,9 @@ function submitReport() {
 		newWell.marker = m;
 	}
 
-	saveWellsToStorage();
+    // FIX: CIRCULAR JSON ERROR
+    // We remove the circular logic by filtering out the 'marker' key before saving
+    saveWellsToStorage();
 
 	const t = translations[currentLanguage];
 	modalContent.innerHTML = `
@@ -511,7 +511,7 @@ function submitReport() {
     `;
 }
 
-// 5. EXPOSE GLOBALS (Important for HTML onclick)
+// 5. EXPOSE GLOBALS (Crucial for HTML onclick)
 window.handleMapTapForNewWell = handleMapTapForNewWell;
 window.openModal = openModal;
 window.closeModal = closeModal;
@@ -521,13 +521,19 @@ window.submitReport = submitReport;
             HELPER FUNCTIONS
 ----------------------------*/
 function saveWellsToStorage() {
-	localStorage.setItem("wellsData", JSON.stringify(wells));
+    // FIX: Remove 'marker' property before stringifying to avoid circular error
+    const dataToSave = wells.map(well => {
+        const { marker, ...rest } = well; 
+        return rest;
+    });
+	localStorage.setItem("wellsData", JSON.stringify(dataToSave));
 }
 
 function loadWellsFromStorage() {
 	const stored = localStorage.getItem("wellsData");
 	if (stored) {
 		const parsed = JSON.parse(stored);
+        // Ensure no marker property is loaded (it's null by default anyway)
 		parsed.forEach(w => (w.marker = null));
 		wells.length = 0;
 		wells.push(...parsed);
@@ -598,7 +604,6 @@ function setLanguage(lang) {
 
 	updateAllWellPopups();
 	
-	// FIX: Check if modalBg exists before accessing style
 	if (modalBg && modalBg.style.display === "flex") {
 		resetForm();
 	}
@@ -699,7 +704,7 @@ function resetForm() {
 	const t = translations[currentLanguage];
 	const translatedVillageName = t[currentVillageName] || currentVillageName;
 
-    // FIX: Header first, then Map, then Form Content
+    // FIX: Layout Order -> Header, then Map, then Form
 	modalContent.innerHTML = `
         <div class="modal-header-controls">
             <h2>${wellToEdit ? t.modalUpdateReport : t.modalNewWell}</h2>
@@ -998,7 +1003,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (installBanner) installBanner.style.display = "none";
 		if (manualInstallBtn) manualInstallBtn.style.display = "none";
 
-		// FIX: Reset buttons state after install
 		if (optionsDiv && mainBtn) {
 			optionsDiv.classList.remove("active");
 			mainBtn.style.display = "block";
