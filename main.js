@@ -31,7 +31,7 @@ function chooseIcon(availability) {
 }
 
 /* -------------------------
-    TRANSLATIONS
+            TRANSLATIONS
 ----------------------------*/
 const translations = {
 	en: {
@@ -90,8 +90,6 @@ const translations = {
 			"Geolocation is not supported by your browser.",
 		alertTapMapPrompt: "Tap on the map to place a new well.",
 		alertLocationNotFound: "Location not found in Syria",
-
-		// PWA & INSTALL
 		installBanner: `<b>Install App to Save Maps</b><br><br>Maps viewed in this browser are NOT saved.<br>Install the app, open it, and <i>then</i> browse the map to save it for offline.`,
 		installBtn: "Install App",
 		manualInstallBtn: "📲 Install App",
@@ -101,8 +99,6 @@ const translations = {
 		firstRunTitle: "Offline Mode Tips",
 		firstRunMsg:
 			"While you are online, browse the areas on the map you want to access later. This will save them for offline use.",
-
-		// DETAILS
 		cityAleppo: "Aleppo",
 		cityRaqqa: "Raqqa",
 		cityDeir: "Deir ez-Zor",
@@ -169,7 +165,6 @@ const translations = {
 		alertGeolocationNotSupported: "الموقع الجغرافي غير مدعوم من قبل متصفحك.",
 		alertTapMapPrompt: "انقر على الخريطة لوضع بئر جديد.",
 		alertLocationNotFound: "الموقع غير موجود في سوريا",
-
 		installBanner: `<b>ثبت التطبيق لحفظ الخرائط</b><br><br>الخرائط التي تشاهدها هنا لا يتم حفظها.<br>قم بتثبيت التطبيق وافتحه، و<i>ثم</i> تصفح الخريطة بداخله لتعمل دون إنترنت.`,
 		installBtn: "تثبيت",
 		manualInstallBtn: "📲 تثبيت التطبيق",
@@ -179,7 +174,6 @@ const translations = {
 		firstRunTitle: "نصائح وضع عدم الاتصال",
 		firstRunMsg:
 			"أثناء اتصالك بالإنترنت، تصفح المناطق التي تريد الوصول إليها لاحقاً على الخريطة. سيؤدي هذا إلى حفظها تلقائياً.",
-
 		cityAleppo: "حلب",
 		cityRaqqa: "الرقة",
 		cityDeir: "دير الزور",
@@ -246,7 +240,6 @@ const translations = {
 			"Cîhê erdnîgarî ji hêla geroka we ve nayê piştgirî kirin.",
 		alertTapMapPrompt: "Li ser nexşeyê bikirtînin da ku bîrek nû bi cîh bikin.",
 		alertLocationNotFound: "Cîh li Sûriyê nehat dîtin",
-
 		installBanner: `<b>Ji bo tomarkirinê saz bike</b><br><br>Nexşeyên ku li vir têne dîtin nayên tomarkirin.<br>Sepanê saz bike, veke û <i>paşê</i> nexşeyê bigerîne da ku offline bixebite.`,
 		installBtn: "Sepîyê bike",
 		manualInstallBtn: "📲 Sepanê Saz Bike",
@@ -256,7 +249,6 @@ const translations = {
 		firstRunTitle: "Şîretên Offline",
 		firstRunMsg:
 			"Dema ku hûn serhêl in, deverên li ser nexşeyê ku hûn dixwazin paşê bigihîjin wan bigerînin. Ev ê wan ji bo offline tomar bike.",
-
 		cityAleppo: "Heleb",
 		cityRaqqa: "Reqa",
 		cityDeir: "Dêra Zorê",
@@ -385,7 +377,7 @@ function updateInstallTexts() {
 	installBtn.textContent = t.installBtn;
 }
 
-// --- LANGUAGE FUNCTION (Fixed) ---
+// --- LANGUAGE FUNCTION ---
 function setLanguage(lang) {
 	currentLanguage = lang;
 	const isRtl = lang === "ar";
@@ -412,7 +404,14 @@ function setLanguage(lang) {
 	});
 
 	// PWA Texts
-	updateInstallTexts();
+	if (
+		typeof installBanner !== "undefined" &&
+		installBanner !== null &&
+		typeof installBtn !== "undefined" &&
+		installBtn !== null
+	) {
+		updateInstallTexts();
+	}
 
 	const manualBtn = document.getElementById("manualInstallBtn");
 	if (manualBtn && translations[lang].manualInstallBtn) {
@@ -436,6 +435,20 @@ function updateAllWellPopups() {
 		}
 	});
 }
+
+// --- GLOBALS FOR HTML ACCESS ---
+const modalBg = document.getElementById("modalBg");
+const modalContent = document.getElementById("modalContent");
+const addWellOptions = document.getElementById("addWellOptions");
+let currentVillageName = "";
+let currentWellName = "";
+let currentWellCoords = null;
+let modalMap = null;
+
+// MAKE FUNCTIONS GLOBAL SO HTML CAN SEE THEM
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.submitReport = submitReport;
 
 function createWellPopupContent(w) {
 	const t = translations[currentLanguage];
@@ -509,18 +522,10 @@ function createWellPopupContent(w) {
 	if (w.additionalNotes)
 		content += `<div class="popup-notes"><strong>${t.popupNotes}</strong><br>${notesText}</div>`;
 
-	content += `<br><button onclick="openModal('${w.village}', '${w.name}', [${w.coords[0]}, ${w.coords[1]}])">${t.reportUpdateBtn}</button>`;
+	// Passing arguments carefully for global function access
+	content += `<br><button onclick="window.openModal('${w.village}', '${w.name}', [${w.coords[0]}, ${w.coords[1]}])">${t.reportUpdateBtn}</button>`;
 	return content;
 }
-
-// --- MODAL & UI LOGIC ---
-const modalBg = document.getElementById("modalBg");
-const modalContent = document.getElementById("modalContent");
-const addWellOptions = document.getElementById("addWellOptions");
-let currentVillageName = "";
-let currentWellName = "";
-let currentWellCoords = null;
-let modalMap = null;
 
 function openModal(
 	villageName = "Unknown Location",
@@ -531,16 +536,16 @@ function openModal(
 	currentWellName = wellName;
 	currentWellCoords = coords;
 
-	addWellOptions.classList.remove("active");
+	if (addWellOptions) addWellOptions.classList.remove("active");
 	if (tempMarker) {
 		map.removeLayer(tempMarker);
 		tempMarker = null;
 	}
-	modalContent.scrollTop = 0;
+	if (modalContent) modalContent.scrollTop = 0;
 	map.off("click", handleMapTapForNewWell);
 
 	resetForm();
-	modalBg.style.display = "flex";
+	if (modalBg) modalBg.style.display = "flex";
 
 	if (currentWellCoords) {
 		setTimeout(() => {
@@ -575,12 +580,12 @@ function openModal(
 			});
 			modalMap.invalidateSize();
 		}, 100);
-		modalContent.scrollTop = 0;
+		if (modalContent) modalContent.scrollTop = 0;
 	}
 }
 
 function closeModal() {
-	modalBg.style.display = "none";
+	if (modalBg) modalBg.style.display = "none";
 	currentVillageName = "";
 	currentWellName = "";
 	currentWellCoords = null;
@@ -588,7 +593,7 @@ function closeModal() {
 		modalMap.remove();
 		modalMap = null;
 	}
-	addWellOptions.classList.remove("active");
+	if (addWellOptions) addWellOptions.classList.remove("active");
 	map.off("click", handleMapTapForNewWell);
 	if (tempMarker) {
 		map.removeLayer(tempMarker);
@@ -597,6 +602,8 @@ function closeModal() {
 }
 
 function resetForm() {
+	if (!modalContent) return;
+
 	const wellToEdit = wells.find(
 		w => w.name === currentWellName && w.village === currentVillageName
 	);
@@ -607,7 +614,7 @@ function resetForm() {
 
 	modalContent.innerHTML = `
         <div class="modal-header-controls" style="border: none;">
-            <div class="close-btn" onclick="closeModal()">×</div>
+            <div class="close-btn" onclick="window.closeModal()">×</div>
         </div>
         ${
 					wellCoordsToDisplay
@@ -696,7 +703,7 @@ function resetForm() {
                 <input type="checkbox" id="consentCheckbox" checked>
                 <label for="consentCheckbox">${t.modalConsent}</label>
             </div>
-            <button class="submit-btn" onclick="submitReport()">${
+            <button class="submit-btn" onclick="window.submitReport()">${
 							t.submitReportBtn
 						}</button>
             <p class="modal-no-internet">${t.offlineMessage}</p>
@@ -730,151 +737,34 @@ function resetForm() {
 	}
 }
 
-function submitReport() {
-	// Logic for submitting report (adds to array/storage)
-	const selectedStatusValue = document.getElementById("conditionSelect").value;
-	const waterAvailability = document.getElementById("availabilitySelect").value;
-	const selectedWaterQuality = Array.from(
-		document.querySelectorAll(".quality-btn.active")
-	).map(btn => btn.dataset.value);
-	const waterQuality = selectedWaterQuality.length
-		? selectedWaterQuality
-		: ["Clear"];
-	const wellType = document.getElementById("typeSelect").value;
-	const wellDepth = document.getElementById("depthSelect").value;
-	const additionalNotes = document.getElementById("additionalNotesInput").value;
-	const consentGiven = document.getElementById("consentCheckbox").checked;
-
-	const newWellData = {
-		village: currentVillageName,
-		name: currentWellName || `New Well ${Date.now()}`,
-		coords: currentWellCoords,
-		status: [selectedStatusValue],
-		waterAvailability,
-		waterQuality,
-		wellType,
-		wellDepth,
-		additionalNotes,
-		consentGiven,
-	};
-
-	if (currentWellName && currentWellCoords) {
-		const existingWellIndex = wells.findIndex(
-			w => w.name === currentWellName && w.village === currentVillageName
-		);
-		if (existingWellIndex !== -1) {
-			wells[existingWellIndex] = {
-				...wells[existingWellIndex],
-				...newWellData,
-			};
-			const updatedWell = wells[existingWellIndex];
-			if (updatedWell.marker) {
-				updatedWell.marker.setIcon(chooseIcon(updatedWell.waterAvailability));
-				updatedWell.marker.setPopupContent(createWellPopupContent(updatedWell));
-			}
-		} else {
-			// New well logic
-			const newWell = { ...newWellData, marker: null };
-			wells.push(newWell);
-			const m = L.marker(newWell.coords, {
-				icon: chooseIcon(newWell.waterAvailability),
-			}).addTo(map);
-			m.bindPopup(createWellPopupContent(newWell));
-			newWell.marker = m;
-		}
-	} else if (currentWellCoords) {
-		const newWell = { ...newWellData, marker: null };
-		wells.push(newWell);
-		const m = L.marker(newWell.coords, {
-			icon: chooseIcon(newWell.waterAvailability),
-		}).addTo(map);
-		m.bindPopup(createWellPopupContent(newWell));
-		newWell.marker = m;
+//---ADD NEW WELL FUNCTION---
+function handleMapTapForNewWell(e) {
+	if (tempMarker) {
+		map.removeLayer(tempMarker);
 	}
 
-	saveWellsToStorage();
+	tempMarker = L.marker(e.latlng, { icon: ICON_BLUE, draggable: true }).addTo(
+		map
+	);
 
-	const t = translations[currentLanguage];
-	modalContent.innerHTML = `
-        <div class="modal-header-controls" style="border: none;">
-            <div class="close-btn" onclick="closeModal()">×</div>
-        </div>
-        <div class="thankyou">${t.thankYouMessage}</div>
-    `;
+	tempMarker.on("dragend", function (event) {
+		const marker = event.target;
+		const position = marker.getLatLng();
+		currentWellCoords = [position.lat, position.lng];
+	});
+
+	currentWellCoords = [e.latlng.lat, e.latlng.lng];
+	openModal("Tapped Location", "", [e.latlng.lat, e.latlng.lng]);
+
+	map.off("click", handleMapTapForNewWell);
 }
 
-// --- BUTTON LISTENERS ---
-const mainBtn = document.getElementById("mainAddWellBtn");
-const optionsDiv = document.getElementById("addWellOptions");
-const cancelBtn = document.getElementById("cancelAddWellBtn");
-
-if (mainBtn) {
-	mainBtn.addEventListener("click", function () {
-		optionsDiv.classList.add("active");
-		mainBtn.style.display = "none";
-	});
-}
-
-if (cancelBtn) {
-	cancelBtn.addEventListener("click", function () {
-		optionsDiv.classList.remove("active");
-		mainBtn.style.display = "block";
-	});
-}
-
-document
-	.getElementById("addWellCurrentLocationBtn")
-	.addEventListener("click", function () {
-		optionsDiv.classList.remove("active");
-		mainBtn.style.display = "block";
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				function (position) {
-					const lat = position.coords.latitude;
-					const lng = position.coords.longitude;
-					map.setView([lat, lng], 14);
-					openModal("Current Location", "", [lat, lng]);
-				},
-				function () {
-					alert(translations[currentLanguage].alertCurrentLocationError);
-				}
-			);
-		} else {
-			alert(translations[currentLanguage].alertGeolocationNotSupported);
-		}
-	});
-
-document
-	.getElementById("addWellTapMapBtn")
-	.addEventListener("click", function () {
-		optionsDiv.classList.remove("active");
-		mainBtn.style.display = "block";
-		alert(translations[currentLanguage].alertTapMapPrompt);
-		map.on("click", handleMapTapForNewWell);
-	});
-
-// LANG BTNS
-document
-	.getElementById("langEn")
-	.addEventListener("click", () => setLanguage("en"));
-document
-	.getElementById("langAr")
-	.addEventListener("click", () => setLanguage("ar"));
-document
-	.getElementById("langKu")
-	.addEventListener("click", () => setLanguage("ku"));
-
-const searchInputEl = document.getElementById("searchInput");
-if (searchInputEl) {
-	searchInputEl.addEventListener("keypress", function (e) {
-		if (e.key === "Enter") performSearch();
-	});
-}
-
-// --- INIT ---
+// --- INIT DOM & EVENTS ---
 document.addEventListener("DOMContentLoaded", () => {
 	setLanguage(currentLanguage);
 	loadWellsFromStorage();
+
+	// Initialize Map Pins
 	wells.forEach(w => {
 		if (!w.marker) {
 			const iconToUse = chooseIcon(w.waterAvailability);
@@ -888,7 +778,80 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	// PWA Logic
+	// --- EVENT LISTENERS FOR BUTTONS (SAFE INSIDE DOMCONTENTLOADED) ---
+	const mainBtn = document.getElementById("mainAddWellBtn");
+	const optionsDiv = document.getElementById("addWellOptions");
+	const cancelBtn = document.getElementById("cancelAddWellBtn");
+	const currentLocationBtn = document.getElementById(
+		"addWellCurrentLocationBtn"
+	);
+	const tapMapBtn = document.getElementById("addWellTapMapBtn");
+
+	if (mainBtn) {
+		mainBtn.addEventListener("click", function () {
+			optionsDiv.classList.add("active");
+			mainBtn.style.display = "none";
+		});
+	}
+
+	if (cancelBtn) {
+		cancelBtn.addEventListener("click", function () {
+			optionsDiv.classList.remove("active");
+			mainBtn.style.display = "block";
+		});
+	}
+
+	if (currentLocationBtn) {
+		currentLocationBtn.addEventListener("click", function () {
+			optionsDiv.classList.remove("active");
+			mainBtn.style.display = "block";
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					function (position) {
+						const lat = position.coords.latitude;
+						const lng = position.coords.longitude;
+						map.setView([lat, lng], 14);
+						openModal("Current Location", "", [lat, lng]);
+					},
+					function () {
+						alert(translations[currentLanguage].alertCurrentLocationError);
+					}
+				);
+			} else {
+				alert(translations[currentLanguage].alertGeolocationNotSupported);
+			}
+		});
+	}
+
+	if (tapMapBtn) {
+		tapMapBtn.addEventListener("click", function () {
+			optionsDiv.classList.remove("active");
+			mainBtn.style.display = "block";
+			alert(translations[currentLanguage].alertTapMapPrompt);
+			map.on("click", handleMapTapForNewWell);
+		});
+	}
+
+	// LANG BUTTONS
+	document
+		.getElementById("langEn")
+		.addEventListener("click", () => setLanguage("en"));
+	document
+		.getElementById("langAr")
+		.addEventListener("click", () => setLanguage("ar"));
+	document
+		.getElementById("langKu")
+		.addEventListener("click", () => setLanguage("ku"));
+
+	// SEARCH
+	const searchInputEl = document.getElementById("searchInput");
+	if (searchInputEl) {
+		searchInputEl.addEventListener("keypress", function (e) {
+			if (e.key === "Enter") performSearch();
+		});
+	}
+
+	// --- PWA LOGIC ---
 	const installBanner = document.getElementById("installBanner");
 	const installBtn = document.getElementById("installBtn");
 	const manualInstallBtn = document.getElementById("manualInstallBtn");
@@ -897,17 +860,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function showInfoModal(titleKey, msgKey) {
 		const t = translations[currentLanguage];
+		if (!modalContent) return;
 		modalContent.innerHTML = `
             <div class="modal-header-controls" style="border: none;">
-                <div class="close-btn" onclick="closeModal()">×</div>
+                <div class="close-btn" onclick="window.closeModal()">×</div>
             </div>
             <div style="padding: 0 24px 40px 24px; text-align: center;">
                 <h2 style="color: #001d6e; margin-bottom: 16px;">${t[titleKey]}</h2>
                 <p style="font-size: 16px; line-height: 1.6; color: #333;">${t[msgKey]}</p>
-                <button class="submit-btn" onclick="closeModal()">OK</button>
+                <button class="submit-btn" onclick="window.closeModal()">OK</button>
             </div>
         `;
-		modalBg.style.display = "flex";
+		if (modalBg) modalBg.style.display = "flex";
 	}
 
 	window.addEventListener("beforeinstallprompt", e => {
@@ -931,6 +895,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		deferredPrompt = null;
 		if (installBanner) installBanner.style.display = "none";
 		if (manualInstallBtn) manualInstallBtn.style.display = "none";
+		
+		// Reset menu if open
+		if (optionsDiv && mainBtn) {
+			optionsDiv.classList.remove("active");
+			mainBtn.style.display = "block";
+		}
 	}
 
 	if (installBtn) installBtn.addEventListener("click", triggerInstall);
@@ -938,7 +908,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		manualInstallBtn.addEventListener("click", triggerInstall);
 	if (closeBannerBtn) {
 		closeBannerBtn.addEventListener("click", () => {
-			installBanner.style.display = "none";
+			if (installBanner) installBanner.style.display = "none";
 			localStorage.setItem("installBannerDismissed", "true");
 		});
 	}
@@ -962,3 +932,40 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 });
+
+function performSearch() {
+	const term = searchInput.value.toLowerCase();
+	if (term.length < 3) return;
+
+	const t = translations[currentLanguage];
+
+	const localWell = wells.find(w => {
+		const villageTranslated = (t[w.village] || w.village).toLowerCase();
+		const nameTranslated = (t[w.name] || w.name).toLowerCase();
+		return villageTranslated.includes(term) || nameTranslated.includes(term);
+	});
+
+	if (localWell) {
+		map.setView(localWell.coords, 14);
+		localWell.marker.openPopup();
+	} else {
+		fetch(
+			`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+				term + " Syria"
+			)}`
+		)
+			.then(response => response.json())
+			.then(data => {
+				if (data.length > 0) {
+					const lat = data[0].lat;
+					const lon = data[0].lon;
+					map.setView([lat, lon], 12);
+				} else {
+					alert(translations[currentLanguage].alertLocationNotFound);
+				}
+			})
+			.catch(err => {
+				console.error("Error:", err);
+			});
+	}
+}
