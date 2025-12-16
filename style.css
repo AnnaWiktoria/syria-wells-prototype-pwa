@@ -795,7 +795,7 @@ html[dir="rtl"] .leaflet-popup-close-button {
 #manualInstallBtn {
 	display: none;
 	background: #60a5fa;
-	color: #011241;
+	color: #white;
 }
 
 @keyframes slideUpBanner {
@@ -856,3 +856,4 @@ html[dir="rtl"] .banner-close-btn {
 html[dir="rtl"] #installBanner {
 	text-align: right;
 }
+
