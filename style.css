@@ -1,0 +1,857 @@
+/* =========================================
+   DESIGN SYSTEM (CSS VARIABLES)
+   ========================================= */
+:root {
+	/* --- PALETA KOLORÓW --- */
+	--color-primary: #001d6e; /* Główny granat */
+	--color-primary-dark: #011241; /* Ciemniejszy granat (hover) */
+	--color-primary-light: #e6effc; /* Bardzo jasny błękit (tła aktywne) */
+
+	--color-text-main: #333333; /* Główny tekst */
+	--color-text-secondary: #666666; /* Tekst pomocniczy/szary */
+	--color-text-white: #ffffff;
+
+	--color-bg-body: #f4f4f4; /* Tło strony */
+	--color-bg-card: #ffffff; /* Tło kart/modala */
+	--color-bg-offline: #f8f9fa; /* Tło komunikatu offline */
+
+	--color-border: #cccccc;
+	--color-border-light: #f0f0f0;
+	--color-border-focus: rgba(0, 29, 110, 0.2);
+
+	/* --- TYPOGRAFIA --- */
+	--font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+
+	--font-size-sm: 14px;
+	--font-size-base: 16px;
+	--font-size-md: 18px;
+	--font-size-lg: 20px;
+	--font-size-xl: 22px;
+	--font-size-xxl: 24px;
+
+	/* --- UI / SPACING --- */
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 20px;
+	--radius-xl: 24px;
+
+	--shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+	--shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+	--shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================
+   GLOBAL STYLES
+   ========================================= */
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	font-family: var(--font-family-base);
+	background: var(--color-bg-body);
+	color: var(--color-text-main);
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+	padding-top: 120px !important;
+	box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+   ========================================= */
+.app-header {
+	position: absolute;
+	background-color: var(--color-primary);
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 120px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 16px;
+	z-index: 2000;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-top-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 92%;
+	padding-bottom: 16px;
+	padding-right: 0;
+	margin-left: 16px;
+	margin-top: 4px;
+}
+
+.header-title {
+	color: var(--color-text-white);
+	font-weight: 700;
+	font-size: var(--font-size-lg);
+	white-space: nowrap;
+}
+
+/* --- LANGUAGE SELECTOR --- */
+.language-selector {
+	display: flex;
+	gap: 5px;
+}
+
+.lang-button {
+	background: rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	padding: 6px 10px;
+	border-radius: var(--radius-sm);
+	font-size: var(--font-size-sm);
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 600;
+}
+
+.lang-button.active {
+	background: var(--color-text-white);
+	color: var(--color-primary);
+	border-color: var(--color-text-white);
+}
+
+.lang-button:not(.active):hover {
+	background: rgba(255, 255, 255, 0.2);
+	color: var(--color-text-white);
+}
+
+/* --- SEARCHBAR --- */
+.search-container {
+	background: var(--color-bg-card);
+	border-radius: var(--radius-lg);
+	display: flex;
+	align-items: center;
+	padding: 6px 12px;
+	flex-grow: 1;
+	width: calc(100% - 32px);
+	max-width: none;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	margin: 0 16px;
+	box-sizing: border-box;
+}
+
+.search-icon {
+	width: 14px;
+	height: 14px;
+	fill: gray;
+	margin-right: 8px;
+	flex-shrink: 0;
+}
+
+.search-input {
+	background: transparent;
+	border: none;
+	color: black;
+	font-size: var(--font-size-base);
+	width: 100%;
+	outline: none;
+}
+
+.search-input::placeholder {
+	color: gray;
+}
+
+/* =========================================
+   FLOATING ACTION BUTTONS (ADD WELL)
+   ========================================= */
+.floating-buttons-container {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+#mainAddWellBtn {
+	background: var(--color-primary);
+	color: var(--color-text-white);
+	padding: 16px 24px;
+	border-radius: var(--radius-md);
+	border: none;
+	font-size: var(--font-size-base);
+	font-weight: 700;
+	box-shadow: var(--shadow-md);
+	cursor: pointer;
+	transition: background 0.3s ease, transform 0.2s ease;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	text-align: center;
+	min-width: 180px;
+}
+#mainAddWellBtn:active,
+.add-well-options button:active,
+.submit-btn:active,
+.quality-btn:active,
+.lang-button:active {
+	transform: scale(0.96);
+	transition: transform 0.1s ease;
+}
+
+@media (hover: hover) {
+	#mainAddWellBtn:hover,
+	.submit-btn:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 6px 12px rgba(0, 29, 110, 0.3);
+	}
+}
+
+#mainAddWellBtn:hover {
+	background: var(--color-primary-dark);
+}
+
+.add-well-options {
+	display: none;
+	flex-direction: column;
+	gap: 8px;
+	align-items: flex-end;
+}
+
+@media (max-width: 500px) {
+	.add-well-options {
+		align-items: center;
+	}
+}
+
+.add-well-options.active {
+	display: flex;
+}
+
+.add-well-options button {
+	background: rgba(0, 29, 110, 0.95); /* Keep semi-transparent for overlay */
+	color: var(--color-text-white);
+	padding: 12px 20px;
+	border-radius: var(--radius-md);
+	border: none;
+	font-size: var(--font-size-base);
+	font-weight: 600;
+	box-shadow: var(--shadow-sm);
+	cursor: pointer;
+	transition: background 0.3s ease, transform 0.2s ease;
+	text-align: center;
+	min-width: 180px;
+}
+
+.add-well-options button:hover {
+	background: var(--color-primary-dark);
+}
+
+#cancelAddWellBtn {
+	background: var(--color-text-secondary) !important;
+}
+
+/* =========================================
+   MODAL (FLOATING CARD)
+   ========================================= */
+.modal-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	box-sizing: border-box;
+	z-index: 10000;
+}
+
+.modal-bg[style*="display: flex"] {
+	display: flex !important;
+}
+
+.modal {
+	background: var(--color-bg-card);
+	width: 100%;
+	max-width: 500px;
+	height: auto;
+	max-height: 84vh;
+	border-radius: var(--radius-xl);
+	box-shadow: var(--shadow-lg);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+}
+
+/* --- MODAL HEADER --- */
+.modal-header-controls {
+	background: var(--color-bg-card);
+	padding: 20px 24px 10px 24px;
+	position: sticky;
+	top: 0;
+	z-index: 20;
+	border-bottom: 1px solid var(--color-border-light);
+}
+
+.modal-header-controls h2 {
+	margin: 0 0 5px 0;
+	font-size: var(--font-size-xl);
+	font-weight: 700;
+	color: var(--color-text-main);
+	padding-right: 30px;
+}
+
+.modal-header-controls p.desc {
+	margin: 0;
+	color: var(--color-text-secondary);
+	font-size: 15px;
+	line-height: 1.5;
+	padding-right: 30px;
+}
+
+/* Close X */
+.modal-header-controls .close-btn {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	font-size: 32px;
+	line-height: 1;
+	cursor: pointer;
+	color: #888;
+	z-index: 30;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+}
+
+/* --- MODAL CONTENT --- */
+.modal-content-inner {
+	padding: 24px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	padding-bottom: 40px;
+}
+/* --- ULEPSZENIE: ANIMACJA WEJŚCIA MODALA --- */
+@keyframes modalSlideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+.modal {
+	animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+.modal-bg {
+	animation: fadeIn 0.2s ease-out;
+}
+
+/* Inputs & Forms */
+.modal-content-inner select,
+.modal-content-inner input[type="text"],
+.modal-content-inner textarea {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	font-size: var(--font-size-base);
+	margin-bottom: 12px;
+	box-sizing: border-box;
+	font-family: inherit;
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 4px rgba(0, 29, 110, 0.15);
+	background: white;
+	transition: all 0.2s ease;
+}
+.modal-content-inner select {
+	height: 48px;
+}
+
+label {
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 8px;
+	font-weight: 600;
+	font-size: 15px;
+	color: #444;
+}
+
+/* 2-Column Grid */
+.two-col-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+	margin-top: 5px;
+}
+.two-col-grid > div {
+	display: flex;
+	flex-direction: column;
+}
+.two-col-grid input,
+.two-col-grid select {
+	margin-bottom: 0;
+}
+@media (max-width: 380px) {
+	.two-col-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Quality buttons */
+.quality-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	margin-top: 5px;
+}
+.quality-btn {
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	font-size: 15px;
+	background: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	color: #555;
+	transition: all 0.2s;
+}
+.quality-btn.active {
+	border-color: var(--color-primary);
+	background: var(--color-primary-light);
+	color: var(--color-primary);
+	font-weight: 600;
+	box-shadow: 0 2px 5px rgba(0, 29, 110, 0.1);
+}
+
+/* Submit & Messages */
+.submit-btn {
+	margin-top: 30px;
+	background: var(--color-primary);
+	color: var(--color-text-white);
+	padding: 16px;
+	border: none;
+	border-radius: var(--radius-md);
+	width: 100%;
+	font-size: var(--font-size-md);
+	font-weight: 700;
+	cursor: pointer;
+	box-shadow: var(--shadow-md);
+}
+.submit-btn:hover {
+	background: var(--color-primary-dark);
+}
+
+.modal-no-internet {
+	margin-top: 20px;
+	padding: 15px;
+	background-color: var(--color-bg-offline);
+	border: 1px solid #e9ecef;
+	border-radius: 10px;
+	color: var(--color-text-secondary);
+	font-size: 13px;
+	line-height: 1.5;
+	text-align: center;
+}
+
+.thankyou {
+	padding: 40px 20px;
+	text-align: center;
+	font-size: var(--font-size-md);
+	color: var(--color-primary);
+	line-height: 1.6;
+}
+
+.modal-map-container {
+	width: 100%;
+	height: 180px;
+	background: #eee;
+	flex-shrink: 0;
+}
+#modalMap {
+	width: 100%;
+	height: 100%;
+}
+
+.checkbox-container {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+	font-size: var(--font-size-sm);
+	color: var(--color-text-secondary);
+}
+.checkbox-container input {
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+
+/* =========================================
+   LEAFLET MAP POPUP
+   ========================================= */
+.leaflet-popup {
+	margin: 0 !important;
+	bottom: auto !important;
+	top: 0 !important;
+}
+
+.leaflet-popup-content-wrapper {
+	border-radius: var(--radius-md);
+	padding: 12px;
+	box-shadow: var(--shadow-sm);
+}
+
+.leaflet-popup-content {
+	margin: 4px;
+	font-size: var(--font-size-base);
+	line-height: 1.6;
+	color: var(--color-text-main);
+}
+
+.leaflet-popup-content b {
+	font-size: var(--font-size-base);
+	color: var(--color-primary);
+	display: block;
+	margin-bottom: 5px;
+}
+
+.leaflet-popup-content p {
+	margin: 4px 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 4px;
+	border-bottom: 1px dotted #eee;
+}
+
+.leaflet-popup-content button {
+	margin-top: 12px !important;
+	background: var(--color-primary);
+	color: var(--color-text-white);
+	padding: 12px;
+	border: none;
+	border-radius: var(--radius-sm);
+	width: 100%;
+	font-size: var(--font-size-base);
+	font-weight: 700;
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+.leaflet-popup-tip-container {
+	display: none;
+}
+
+/* Artificial triangle tip */
+.leaflet-popup-content-wrapper::before {
+	content: "";
+	position: absolute;
+	top: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	border-width: 0 12px 12px 12px;
+	border-style: solid;
+	border-color: transparent transparent white transparent;
+	z-index: 1;
+}
+
+.leaflet-popup-close-button {
+	width: 36px !important;
+	height: 36px !important;
+	font-size: 30px !important;
+	line-height: 36px !important;
+	color: var(--color-text-secondary) !important;
+	font-weight: normal !important;
+	top: 8px !important;
+	right: 8px !important;
+}
+
+.popup-notes {
+	margin-top: 12px;
+	font-size: var(--font-size-base);
+	line-height: 1.6;
+	color: #444;
+}
+
+.popup-notes strong {
+	color: var(--color-primary);
+	display: block;
+	margin-bottom: 4px;
+}
+
+/* =========================================
+   CUSTOM PIN ICONS (SVG)
+   ========================================= */
+.custom-pin-icon {
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	width: 32px !important;
+	height: 42px !important;
+	display: block;
+	background-size: contain;
+	filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+.custom-pin-icon.blue {
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%231D4ED8" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/></svg>');
+}
+
+.custom-pin-icon.light {
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%2360A5FA" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/></svg>');
+}
+
+.custom-pin-icon.orange {
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%23F59E0B" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/></svg>');
+}
+
+.custom-pin-icon.red {
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%23DC2626" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/></svg>');
+}
+
+/* =========================================
+   RTL ADAPTATION (ARABIC/KURDISH)
+   ========================================= */
+
+/* Header & Modal Adjustments */
+html[dir="rtl"] .header-top-row {
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+html[dir="rtl"] .modal-header-controls {
+	text-align: right;
+}
+
+html[dir="rtl"] .modal-header-controls .close-btn {
+	right: auto;
+	left: 20px;
+}
+
+html[dir="rtl"] .close-btn {
+	right: auto;
+	left: 20px;
+}
+
+html[dir="rtl"] .quality-grid {
+	direction: rtl;
+}
+
+/* Leaflet Popup Adjustments for RTL */
+html[dir="rtl"] .leaflet-popup-close-button {
+	right: auto !important;
+	left: 0 !important;
+}
+
+html[dir="rtl"] .leaflet-popup-content-wrapper {
+	text-align: right;
+	direction: rtl;
+}
+
+html[dir="rtl"] .leaflet-popup-content {
+	margin-right: 20px;
+	margin-left: 24px;
+}
+
+/* =========================================
+   ARABIC TYPOGRAPHY OVERRIDES
+   ========================================= */
+
+/* Dymki na mapie (Popupy) */
+html[lang="ar"] .leaflet-popup-content {
+	font-size: 18px !important; /* Explicit bump for legibility */
+	line-height: 1.8 !important;
+	width: 250px !important;
+	text-align: right;
+}
+
+html[lang="ar"] .leaflet-popup-content b {
+	font-size: 21px !important;
+	display: block;
+	margin-bottom: 10px;
+	color: var(--color-primary);
+}
+
+html[lang="ar"] .leaflet-popup-content strong {
+	font-weight: 800;
+	color: var(--color-text-main);
+}
+
+html[lang="ar"] .leaflet-popup-content .popup-notes {
+	font-size: 16px !important;
+	background: var(--color-bg-offline);
+	padding: 8px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+html[lang="ar"] .leaflet-popup-content button {
+	font-size: 17px !important;
+	padding: 8px 15px !important;
+	width: 100%;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+html[dir="rtl"] .leaflet-popup-close-button {
+	right: auto !important;
+	left: 8px !important;
+}
+
+/* =========================================
+   PWA INSTALL BANNER (ID based)
+   ========================================= */
+
+#installBanner {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	right: 20px;
+	background: var(--color-bg-card, #ffffff);
+	border-radius: var(--radius-lg, 16px);
+	box-shadow: var(--shadow-lg, 0 10px 30px rgba(0, 0, 0, 0.3));
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	z-index: 10001;
+	border-left: 5px solid var(--color-primary, #001d6e);
+	animation: slideUpBanner 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#installBanner[style*="display: flex"] {
+	display: flex !important;
+}
+
+#installText {
+	font-size: 14px;
+	color: var(--color-text-main, #333);
+	line-height: 1.5;
+}
+
+#installText b {
+	display: block;
+	font-size: 16px;
+	color: var(--color-primary, #001d6e);
+	margin-bottom: 6px;
+	font-weight: 700;
+}
+
+#installBtn {
+	background: var(--color-primary, #001d6e);
+	color: var(--color-text-white, white);
+	border: none;
+	padding: 12px;
+	border-radius: var(--radius-sm, 8px);
+	font-size: 15px;
+	font-weight: 700;
+	text-transform: uppercase;
+	cursor: pointer;
+	width: 100%;
+	transition: background 0.2s, transform 0.1s;
+	box-shadow: var(--shadow-sm);
+}
+
+#installBtn:active {
+	transform: scale(0.98);
+}
+#closeInstallBanner {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	background: transparent;
+	border: none;
+	font-size: 24px;
+	color: #666;
+	cursor: pointer;
+	padding: 0 5px;
+	line-height: 1;
+}
+#manualInstallBtn {
+	display: none;
+	background: #007681;
+}
+
+@keyframes slideUpBanner {
+	from {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (min-width: 600px) {
+	#installBanner {
+		width: 360px;
+		left: auto;
+		right: 20px;
+		bottom: 30px;
+	}
+}
+.banner-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: transparent;
+	border: none;
+	font-size: 24px;
+	color: #999;
+	cursor: pointer;
+	line-height: 1;
+	padding: 5px;
+	z-index: 10;
+}
+
+/* =========================================
+   RTL SUPPORT (ARABIC) FOR BANNER
+   ========================================= */
+
+html[dir="rtl"] #installBanner {
+	text-align: right;
+	border-left: none;
+	border-right: 5px solid var(--color-primary, #001d6e);
+}
+
+@media (min-width: 600px) {
+	html[dir="rtl"] #installBanner {
+		right: auto;
+		left: 20px;
+	}
+}
+
+html[dir="rtl"] .banner-close-btn {
+	right: auto;
+	left: 10px;
+}
+
+html[dir="rtl"] #installBanner {
+	text-align: right;
+}

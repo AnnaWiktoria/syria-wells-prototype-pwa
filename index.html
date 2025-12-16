@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Map of wells in Syria</title>
+
+    <!-- Leaflet (The only external library - essential for the map)-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
+
+    <link rel="icon" href="data:,">
+
+</head>
+
+<body>
+
+    <header class="app-header">
+        <div class="header-top-row">
+            <div class="header-title" data-key="headerTitle">Wells in Syria</div>
+            <div class="language-selector">
+                <button id="langEn" class="lang-button active">EN</button>
+                <button id="langAr" class="lang-button">عربي</button>
+                <button id="langKu" class="lang-button">Kurdî</button>
+            </div>
+        </div>
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24">
+                <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <input type="text" id="searchInput" class="search-input" data-key="searchPlaceholder"
+                placeholder="Find village...">
+        </div>
+    </header>
+
+    <div id="map"></div>
+
+    <!-- MENU PRZYCISKÓW -->
+    <div class="floating-buttons-container">
+        <div class="add-well-options" id="addWellOptions">
+            <button id="addWellCurrentLocationBtn" data-key="addCurrentLocationBtn">📍 Add at Current Location</button>
+            <button id="addWellTapMapBtn" data-key="addTapMapBtn">👆 Add by Tapping Map</button>
+
+            <!-- PRZYCISK RĘCZNEJ INSTALACJI (Pojawi się tylko, gdy PWA będzie gotowe) -->
+            <button id="manualInstallBtn" style="display: none; background: #008000; color: white;">📲 Install
+                App</button>
+
+            <button id="cancelAddWellBtn" data-key="btnCancel">✕ Cancel</button>
+        </div>
+        <button id="mainAddWellBtn" data-key="addWellBtn">Add Well</button>
+    </div>
+
+    <!-- MODAL RAPORTU -->
+    <div id="modalBg" class="modal-bg">
+        <div id="modalContent" class="modal">
+            <!-- Treść wstawiana przez JS -->
+        </div>
+    </div>
+
+    <!-- PWA INSTALL BANNER (Tylko jeden!) -->
+    <div id="installBanner" style="display:none;">
+        <button id="closeInstallBanner" class="banner-close-btn">&times;</button>
+        <span id="installText"></span>
+        <button id="installBtn"></button>
+    </div>
+
+    <!-- Main JS -->
+    <script src="main.js" defer></script>
+
+    <!-- Service Worker registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('SW Registered'))
+                    .catch(err => console.log('SW Failed:', err));
+            });
+        }
+    </script>
+
+</body>
+
+</html>
