@@ -1,34 +1,30 @@
 const CACHE_NAME = "syria-wells-v1";
+
+// 1. W tej liście trzymamy TYLKO pliki lokalne.
+// Dzięki temu instalacja PWA nie wywali się przez błędy sieciowe CDN.
 const urlsToCache = [
-	"./",                // ZMIANA: kropka na początku
-	"./index.html",      // ZMIANA: kropka na początku
-	"./style.css",       // ZMIANA: kropka na początku
-	"./main.js",         // ZMIANA: kropka na początku
-	"./manifest.json",   // ZMIANA: kropka na początku
-    // UPEWNIJ SIĘ, ŻE TE PLIKI FIZYCZNIE ISTNIEJĄ W FOLDERZE:
-	"./icon-192.png",    
-	"./icon-512.png",
-    // Linki zewnętrzne zostawiamy bez zmian:
-	"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
-	"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+	"./",
+	"./index.html",
+	"./style.css",
+	"./main.js",
+	"./manifest.json",
+	"./icon-192.png", 
+	"./icon-512.png"  
 ];
 
-// Instalacja SW i buforowanie plików
 self.addEventListener("install", event => {
-	console.log("Service Worker installing...");
+	console.log("[SW] Installing...");
 	event.waitUntil(
 		caches.open(CACHE_NAME).then(cache => {
-			console.log("Caching app shell");
-            // To jest moment krytyczny. Jeśli brakuje pliku, tutaj padnie błąd.
+			console.log("[SW] Caching local core files");
 			return cache.addAll(urlsToCache);
 		})
 	);
 	self.skipWaiting();
 });
 
-// Aktywacja SW (czyszczenie starego cache)
 self.addEventListener("activate", event => {
-	console.log("Service Worker activated");
+	console.log("[SW] Activating...");
 	event.waitUntil(
 		caches.keys().then(keys => {
 			return Promise.all(
@@ -39,26 +35,25 @@ self.addEventListener("activate", event => {
 	self.clients.claim();
 });
 
-// Obsługa fetch – najpierw z cache, potem z sieci
 self.addEventListener("fetch", event => {
-    // Ignorujemy żądania inne niż http/https (np. chrome-extension)
+    // Ignorujemy żądania inne niż http (np. chrome-extension)
     if (!event.request.url.startsWith('http')) return;
 
 	event.respondWith(
 		caches.match(event.request).then(response => {
-            // 1. Jeśli jest w cache, zwróć z cache
+            // Jeśli plik jest w cache (np. Leaflet przy drugim wejściu), zwróć go
 			if (response) {
 				return response;
 			}
             
-            // 2. Jeśli nie ma, pobierz z sieci
+            // Jeśli nie ma, pobierz z sieci i zapisz w cache na przyszłość
 			return fetch(event.request).then(fetchResponse => {
                 // Sprawdzamy czy odpowiedź jest poprawna
-                if(!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+                if(!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic' && fetchResponse.type !== 'cors') {
                     return fetchResponse;
                 }
 
-                // Klonujemy odpowiedź, bo strumień można zużyć tylko raz
+                // Klonujemy odpowiedź
                 const responseToCache = fetchResponse.clone();
 
 				caches.open(CACHE_NAME).then(cache => {
@@ -66,7 +61,9 @@ self.addEventListener("fetch", event => {
 				});
 
 				return fetchResponse;
-			});
+			}).catch(() => {
+                // Tu można dodać obsługę offline dla brakujących plików
+            });
 		})
 	);
 });
