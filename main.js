@@ -17,16 +17,11 @@ const ICON_RED = pin("red");
 
 function chooseIcon(availability) {
 	switch (availability) {
-		case "Plenty":
-			return ICON_BLUE;
-		case "Moderate":
-			return ICON_LIGHT;
-		case "Scarce":
-			return ICON_ORANGE;
-		case "None":
-			return ICON_RED;
-		default:
-			return ICON_LIGHT;
+		case "Plenty": return ICON_BLUE;
+		case "Moderate": return ICON_LIGHT;
+		case "Scarce": return ICON_ORANGE;
+		case "None": return ICON_RED;
+		default: return ICON_LIGHT;
 	}
 }
 
@@ -44,8 +39,7 @@ const translations = {
 		reportUpdateBtn: "Report Update",
 		modalUpdateReport: "Update Report",
 		modalNewWell: "New Well",
-		modalDesc:
-			"Please share information about the water well in {villageName}. <br>You can move the pin if it is in the wrong location.",
+		modalDesc: "Please share information about the water well in {villageName}. <br>You can move the pin if it is in the wrong location.",
 		modalCondition: "Condition",
 		conditionFunctional: "✔ Functional",
 		conditionNeedsRepair: "🔧 Needs repair",
@@ -77,8 +71,7 @@ const translations = {
 		modalConsent: "I agree to share this information.",
 		submitReportBtn: "Submit Report",
 		thankYouMessage: `Thank you. Your report helps improve access to water in your community.<br><br>If you’re offline, your report is saved and will be sent when you’re back online.`,
-		offlineMessage:
-			"No Internet? Your report is saved and will be sent when you’re online.",
+		offlineMessage: "No Internet? Your report is saved and will be sent when you’re online.",
 		popupStatus: "Status:",
 		popupAvailability: "Availability:",
 		popupQuality: "Quality:",
@@ -86,19 +79,16 @@ const translations = {
 		popupDepth: "Depth:",
 		popupNotes: "Notes:",
 		alertCurrentLocationError: "Could not get your current location.",
-		alertGeolocationNotSupported:
-			"Geolocation is not supported by your browser.",
+		alertGeolocationNotSupported: "Geolocation is not supported by your browser.",
 		alertTapMapPrompt: "Tap on the map to place a new well.",
 		alertLocationNotFound: "Location not found in Syria",
 		installBanner: `<b>Install App to Save Maps</b><br><br>Maps viewed in this browser are NOT saved.<br>Install the app, open it, and <i>then</i> browse the map to save it for offline.`,
 		installBtn: "Install App",
 		manualInstallBtn: "📲 Install App",
 		installSuccessTitle: "App Installed!",
-		installSuccessMsg:
-			"The app is installed. <b>Please open the app from your home screen</b> and browse the maps there to save them for offline use.",
+		installSuccessMsg: "The app is installed. <b>Please open the app from your home screen</b> and browse the maps there to save them for offline use.",
 		firstRunTitle: "Offline Mode Tips",
-		firstRunMsg:
-			"While you are online, browse the areas on the map you want to access later. This will save them for offline use.",
+		firstRunMsg: "While you are online, browse the areas on the map you want to access later. This will save them for offline use.",
 		cityAleppo: "Aleppo",
 		cityRaqqa: "Raqqa",
 		cityDeir: "Deir ez-Zor",
@@ -106,8 +96,7 @@ const translations = {
 		note_well_A: "New pump installed last month.",
 		note_well_B: "Engine needs servicing, water levels are low.",
 		note_well_C: "Has been dry for 3 months now. Urgent need for new source.",
-		note_well_D:
-			"Smells bad, villagers are getting sick. Investigation needed.",
+		note_well_D: "Smells bad, villagers are getting sick. Investigation needed.",
 		popupStaticTitle: "Well in {village}",
 	},
 	ar: {
@@ -120,11 +109,10 @@ const translations = {
 		reportUpdateBtn: "تحديث التقرير",
 		modalUpdateReport: "تحديث التقرير",
 		modalNewWell: "بئر جديد",
-		modalDesc:
-			"يرجى مشاركة المعلومات حول بئر الماء في {villageName}. <br>يمكنك تحريك الدبوس إذا كان في موقع خاطئ.",
+		modalDesc: "يرجى مشاركة المعلومات حول بئر الماء في {villageName}. <br>يمكنك تحريك الدبوس إذا كان في موقع خاطئ.",
 		modalCondition: "الحالة",
-		conditionFunctional: "✔ يعمل",
-		conditionNeedsRepair: "🔧 يحتاج إلى إصلاح",
+		conditionFunctional: "✔ الأعمال",
+		conditionNeedsRepair: "🔧للإصلاح",
 		conditionCompletelyBroken: "❌ معطل تمامًا",
 		modalAvailability: "توفر المياه",
 		availabilityPlenty: "💧💧💧 وفيرة",
@@ -153,8 +141,7 @@ const translations = {
 		modalConsent: "أوافق على مشاركة هذه المعلومات.",
 		submitReportBtn: "إرسال التقرير",
 		thankYouMessage: `شكراً لك. تقريرك يساعد في تحسين الوصول إلى المياه في مجتمعك.<br><br>إذا كنت غير متصل بالإنترنت، فسيتم حفظ تقريرك وإرساله عندما تعود إلى الاتصال بالإنترنت.`,
-		offlineMessage:
-			"لا يوجد اتصال بالإنترنت؟ تم حفظ تقريرك وسيتم إرساله عندما تكون متصلاً بالإنترنت.",
+		offlineMessage: "لا يوجد اتصال بالإنترنت؟ تم حفظ تقريرك وسيتم إرساله عندما تكون متصلاً بالإنترنت.",
 		popupStatus: ":الحالة",
 		popupAvailability: ":التوفر",
 		popupQuality: ":الجودة",
@@ -169,11 +156,9 @@ const translations = {
 		installBtn: "تثبيت",
 		manualInstallBtn: "📲 تثبيت التطبيق",
 		installSuccessTitle: "تم تثبيت التطبيق!",
-		installSuccessMsg:
-			"تم التثبيت. <b>يرجى فتح التطبيق من الشاشة الرئيسية</b> وتصفح الخرائط بداخله لحفظها للاستخدام دون إنترنت.",
+		installSuccessMsg: "تم التثبيت. <b>يرجى فتح التطبيق من الشاشة الرئيسية</b> وتصفح الخرائط بداخله لحفظها للاستخدام دون إنترنت.",
 		firstRunTitle: "نصائح وضع عدم الاتصال",
-		firstRunMsg:
-			"أثناء اتصالك بالإنترنت، تصفح المناطق التي تريد الوصول إليها لاحقاً على الخريطة. سيؤدي هذا إلى حفظها تلقائياً.",
+		firstRunMsg: "أثناء اتصالك بالإنترنت، تصفح المناطق التي تريد الوصول إليها لاحقاً على الخريطة. سيؤدي هذا إلى حفظها تلقائياً.",
 		cityAleppo: "حلب",
 		cityRaqqa: "الرقة",
 		cityDeir: "دير الزور",
@@ -194,8 +179,7 @@ const translations = {
 		reportUpdateBtn: "Rapora Nû bike",
 		modalUpdateReport: "Rapora Nû bike",
 		modalNewWell: "Bîra Nû",
-		modalDesc:
-			"Ji kerema xwe agahdariya der barê bîra avê ya li {villageName} parve bikin. <br>Hûn dikarin pîneyê biguherînin ger ew li cîhek xelet be.",
+		modalDesc: "Ji kerema xwe agahdariya der barê bîra avê ya li {villageName} parve bikin. <br>Hûn dikarin pîneyê biguherînin ger ew li cîhek xelet be.",
 		modalCondition: "Rewş",
 		conditionFunctional: "✔ Kar dike",
 		conditionNeedsRepair: "🔧 Ji bo tamîrê",
@@ -227,8 +211,7 @@ const translations = {
 		modalConsent: "Ez razî me ku ez vê agahiyê parve bikim.",
 		submitReportBtn: "Raporê Bişîne",
 		thankYouMessage: `Spas. Rapora we alîkariyê dide baştirkirina gihîştina avê li civata we.<br><br>Heke hûn ne serhêl bin, rapora we tê tomarkirin û dema ku hûn dîsa serhêl bibin dê were şandin.`,
-		offlineMessage:
-			"Înternet tune ye? Rapora we tê tomarkirin û dema ku hûn bikevin ser înternetê dê were şandin.",
+		offlineMessage: "Înternet tune ye? Rapora we tê tomarkirin û dema ku hûn bikevin ser înternetê dê were şandin.",
 		popupStatus: "Rewş:",
 		popupAvailability: "Berdestbûn:",
 		popupQuality: "Kalîte:",
@@ -236,19 +219,16 @@ const translations = {
 		popupDepth: "Kûrahî:",
 		popupNotes: "Têbînî:",
 		alertCurrentLocationError: "Nikare cîhê weya heyî bistîne.",
-		alertGeolocationNotSupported:
-			"Cîhê erdnîgarî ji hêla geroka we ve nayê piştgirî kirin.",
+		alertGeolocationNotSupported: "Cîhê erdnîgarî ji hêla geroka we ve nayê piştgirî kirin.",
 		alertTapMapPrompt: "Li ser nexşeyê bikirtînin da ku bîrek nû bi cîh bikin.",
 		alertLocationNotFound: "Cîh li Sûriyê nehat dîtin",
 		installBanner: `<b>Ji bo tomarkirinê saz bike</b><br><br>Nexşeyên ku li vir têne dîtin nayên tomarkirin.<br>Sepanê saz bike, veke û <i>paşê</i> nexşeyê bigerîne da ku offline bixebite.`,
 		installBtn: "Sepîyê bike",
 		manualInstallBtn: "📲 Sepanê Saz Bike",
 		installSuccessTitle: "Sepan hat saz kirin!",
-		installSuccessMsg:
-			"Sepan hat saz kirin. <b>Ji kerema xwe sepanê vekin</b> û nexşeyan li wir bigerînin da ku ji bo offline werin tomarkirin.",
+		installSuccessMsg: "Sepan hat saz kirin. <b>Ji kerema xwe sepanê vekin</b> û nexşeyan li wir bigerînin da ku ji bo offline werin tomarkirin.",
 		firstRunTitle: "Şîretên Offline",
-		firstRunMsg:
-			"Dema ku hûn serhêl in, deverên li ser nexşeyê ku hûn dixwazin paşê bigihîjin wan bigerînin. Ev ê wan ji bo offline tomar bike.",
+		firstRunMsg: "Dema ku hûn serhêl in, deverên li ser nexşeyê ku hûn dixwazin paşê bigihîjin wan bigerînin. Ev ê wan ji bo offline tomar bike.",
 		cityAleppo: "Heleb",
 		cityRaqqa: "Reqa",
 		cityDeir: "Dêra Zorê",
@@ -256,8 +236,7 @@ const translations = {
 		note_well_A: "Meha borî pompeyek nû hate saz kirin.",
 		note_well_B: "Pêdiviya motorê bi servîsê heye, asta avê kêm e.",
 		note_well_C: "Ev 3 meh in zuwa bûye. Pêdivî bi çavkaniyek nû heye.",
-		note_well_D:
-			"Bêhna wê nexweş e, gundî nexweş dikevin. Pêdivî bi lêkolînê heye.",
+		note_well_D: "Bêhna wê nexweş e, gundî nexweş dikevin. Pêdivî bi lêkolînê heye.",
 		popupStaticTitle: "Bîra li {village}",
 	},
 };
@@ -375,7 +354,10 @@ function handleMapTapForNewWell(e) {
 	});
 
 	currentWellCoords = [e.latlng.lat, e.latlng.lng];
-	openModal("Tapped Location", "", [e.latlng.lat, e.latlng.lng]);
+	// Użycie setTimeout dla pewności
+	setTimeout(() => {
+		openModal("Tapped Location", "", [e.latlng.lat, e.latlng.lng]);
+	}, 100);
 
 	map.off("click", handleMapTapForNewWell);
 }
@@ -397,7 +379,6 @@ function openModal(
 	}
 	if (modalContent) modalContent.scrollTop = 0;
 
-	// Remove listener if active
 	map.off("click", handleMapTapForNewWell);
 
 	resetForm();
@@ -530,7 +511,8 @@ function submitReport() {
     `;
 }
 
-// 5. EXPOSE GLOBALS (Crucial for HTML onclick)
+// 5. EXPOSE GLOBALS (Important for HTML onclick)
+window.handleMapTapForNewWell = handleMapTapForNewWell;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.submitReport = submitReport;
@@ -615,6 +597,8 @@ function setLanguage(lang) {
 	}
 
 	updateAllWellPopups();
+	
+	// FIX: Check if modalBg exists before accessing style
 	if (modalBg && modalBg.style.display === "flex") {
 		resetForm();
 	}
@@ -715,6 +699,7 @@ function resetForm() {
 	const t = translations[currentLanguage];
 	const translatedVillageName = t[currentVillageName] || currentVillageName;
 
+    // FIX: Header first, then Map, then Form Content
 	modalContent.innerHTML = `
         <div class="modal-header-controls">
             <h2>${wellToEdit ? t.modalUpdateReport : t.modalNewWell}</h2>
@@ -724,11 +709,13 @@ function resetForm() {
 						)}</p>
             <div class="close-btn" onclick="window.closeModal()">×</div>
         </div>
+        
         ${
 					wellCoordsToDisplay
 						? `<div class="modal-map-container"><div id="modalMap"></div></div>`
 						: ""
 				}
+        
         <div class="modal-content-inner">
             <div class="two-col-grid">
                 <div>
@@ -1011,7 +998,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (installBanner) installBanner.style.display = "none";
 		if (manualInstallBtn) manualInstallBtn.style.display = "none";
 
-		// Reset menu buttons to default state
+		// FIX: Reset buttons state after install
 		if (optionsDiv && mainBtn) {
 			optionsDiv.classList.remove("active");
 			mainBtn.style.display = "block";
