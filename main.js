@@ -501,6 +501,7 @@ function submitReport() {
     // FIX: CIRCULAR JSON ERROR
     // We remove the circular logic by filtering out the 'marker' key before saving
     saveWellsToStorage();
+	  map.closePopup(); 
 
 	const t = translations[currentLanguage];
 	modalContent.innerHTML = `
@@ -1038,3 +1039,4 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 });
+
