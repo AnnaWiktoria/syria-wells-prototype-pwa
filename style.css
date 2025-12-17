@@ -164,6 +164,97 @@ html {
 .search-input::placeholder {
 	color: gray;
 }
+/* --- 2. LEGENDA (POPUP STARTOWY) --- */
+.legend-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 11000; /* Powyżej wszystkiego */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.legend-card {
+	background: white;
+	padding: 24px;
+	border-radius: 20px;
+	width: 90%;
+	max-width: 350px;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.legend-item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12px;
+	text-align: left;
+}
+.legend-icon {
+	width: 24px;
+	height: 32px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	margin-right: 15px;
+	flex-shrink: 0;
+}
+/* Styl dla obrazków w legendzie */
+.legend-icon-img {
+	width: 24px;
+	height: 36px;
+	margin-right: 15px;
+	display: block;
+}
+
+/* Poprawka dla arabskiego (RTL) */
+html[dir="rtl"] .legend-icon-img {
+	margin-right: 0;
+	margin-left: 15px;
+}
+/* Wersja RTL dla legendy */
+html[dir="rtl"] .legend-item {
+	text-align: right;
+}
+html[dir="rtl"] .legend-icon {
+	margin-right: 0;
+	margin-left: 15px;
+}
+
+/* --- 3. STATUS SIECI (MALEŃKI PASEK) --- */
+.network-status {
+	position: fixed;
+	top: 130px; /* Zaraz pod nagłówkiem */
+	right: 10px;
+	background: white;
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: bold;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	z-index: 1000;
+	transition: all 0.3s ease;
+}
+.status-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #ccc;
+}
+.network-status.online .status-dot {
+	background-color: #22c55e;
+} /* Zielony */
+.network-status.offline .status-dot {
+	background-color: #ef4444;
+} /* Czerwony */
+.network-status.offline {
+	background-color: #fee2e2;
+	color: #991b1b;
+} /* Alarmujący kolor tła */
 
 /* =========================================
    FLOATING ACTION BUTTONS (ADD WELL)
@@ -290,12 +381,13 @@ html {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	overflow: hidden;
+	overflow-y: auto !important; /* Włączamy scroll dla całej karty */
+	-webkit-overflow-scrolling: touch;
 }
 
 /* --- MODAL HEADER --- */
 .modal-header-controls {
-	background: var(--color-bg-card);
+	background: white;
 	padding: 20px 24px 10px 24px;
 	position: sticky;
 	top: 0;
@@ -340,6 +432,8 @@ html {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	padding-bottom: 40px;
+	overflow-y: visible !important; /* Wyłączamy wewnętrzny scroll */
+	height: auto !important;
 }
 /* --- ULEPSZENIE: ANIMACJA WEJŚCIA MODALA --- */
 @keyframes modalSlideUp {
@@ -511,7 +605,35 @@ label {
 	height: 20px;
 	margin-right: 10px;
 }
+/* --- ESTETYCZNY PASEK PRZEWIJANIA (SCROLLBAR) --- */
 
+/* Stylizacja dla Chrome, Safari, Edge */
+.modal::-webkit-scrollbar {
+	width: 6px; /* Bardzo cienki pasek */
+}
+
+.modal::-webkit-scrollbar-track {
+	background: transparent; /* Tło paska przezroczyste */
+	/* Marginesy góra/dół, żeby pasek nie wchodził na zaokrąglone rogi karty */
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.modal::-webkit-scrollbar-thumb {
+	background-color: rgba(
+		0,
+		0,
+		0,
+		0.2
+	); /* Kolor suwaka (półprzezroczysty szary) */
+	border-radius: 20px; /* Zaokrąglony suwak */
+}
+
+/* Opcjonalnie: ukrycie paska w Firefox (tam trudniej o stylizację) */
+.modal {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
 /* =========================================
    LEAFLET MAP POPUP
    ========================================= */
@@ -632,6 +754,10 @@ label {
 
 .custom-pin-icon.red {
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%23DC2626" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/></svg>');
+}
+
+.custom-pin-icon.purple {
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%239333ea" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/><circle cx="12" cy="12" r="4" fill="white" opacity="0.5"/></svg>');
 }
 
 /* =========================================
@@ -795,7 +921,7 @@ html[dir="rtl"] .leaflet-popup-close-button {
 #manualInstallBtn {
 	display: none;
 	background: #60a5fa;
-	color: #white;
+	color: #011241;
 }
 
 @keyframes slideUpBanner {
@@ -856,4 +982,3 @@ html[dir="rtl"] .banner-close-btn {
 html[dir="rtl"] #installBanner {
 	text-align: right;
 }
-
