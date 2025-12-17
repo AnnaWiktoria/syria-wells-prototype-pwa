@@ -14,17 +14,33 @@ const ICON_BLUE = pin("blue");
 const ICON_LIGHT = pin("light");
 const ICON_ORANGE = pin("orange");
 const ICON_RED = pin("red");
+const ICON_PURPLE = pin("purple");
 
-function chooseIcon(availability) {
-	switch (availability) {
-		case "Plenty": return ICON_BLUE;
-		case "Moderate": return ICON_LIGHT;
-		case "Scarce": return ICON_ORANGE;
-		case "None": return ICON_RED;
-		default: return ICON_LIGHT;
+function chooseIcon(well) {
+	// 1. Priorytet: Skażenie (Bezpieczeństwo najważniejsze)
+	// Sprawdzamy czy w statusie LUB w jakości wody jest wzmianka o skażeniu
+	const status = well.status ? well.status[0] : "";
+	const quality = Array.isArray(well.waterQuality)
+		? well.waterQuality
+		: [well.waterQuality];
+
+	if (status === "Contaminated" || quality.includes("Contaminated")) {
+		return ICON_PURPLE;
+	}
+
+	switch (well.waterAvailability) {
+		case "Plenty":
+			return ICON_BLUE;
+		case "Moderate":
+			return ICON_LIGHT;
+		case "Scarce":
+			return ICON_ORANGE;
+		case "None":
+			return ICON_RED;
+		default:
+			return ICON_LIGHT;
 	}
 }
-
 /* -------------------------
             TRANSLATIONS
 ----------------------------*/
@@ -39,7 +55,8 @@ const translations = {
 		reportUpdateBtn: "Report Update",
 		modalUpdateReport: "Update Report",
 		modalNewWell: "New Well",
-		modalDesc: "Please share information about the water well in {villageName}. <br>You can move the pin if it is in the wrong location.",
+		modalDesc:
+			"Please share information about the water well in {villageName}. <br>You can move the pin if it is in the wrong location.",
 		modalCondition: "Condition",
 		conditionFunctional: "✔ Functional",
 		conditionNeedsRepair: "🔧 Needs repair",
@@ -71,7 +88,8 @@ const translations = {
 		modalConsent: "I agree to share this information.",
 		submitReportBtn: "Submit Report",
 		thankYouMessage: `Thank you. Your report helps improve access to water in your community.<br><br>If you’re offline, your report is saved and will be sent when you’re back online.`,
-		offlineMessage: "No Internet? Your report is saved and will be sent when you’re online.",
+		offlineMessage:
+			"No Internet? Your report is saved and will be sent when you’re online.",
 		popupStatus: "Status:",
 		popupAvailability: "Availability:",
 		popupQuality: "Quality:",
@@ -79,16 +97,29 @@ const translations = {
 		popupDepth: "Depth:",
 		popupNotes: "Notes:",
 		alertCurrentLocationError: "Could not get your current location.",
-		alertGeolocationNotSupported: "Geolocation is not supported by your browser.",
+		alertGeolocationNotSupported:
+			"Geolocation is not supported by your browser.",
 		alertTapMapPrompt: "Tap on the map to place a new well.",
 		alertLocationNotFound: "Location not found in Syria",
 		installBanner: `<b>Install App to Save Maps</b><br><br>Maps viewed in this browser are NOT saved.<br>Install the app, open it, and <i>then</i> browse the map to save it for offline.`,
 		installBtn: "Install App",
 		manualInstallBtn: "📲 Install App",
 		installSuccessTitle: "App Installed!",
-		installSuccessMsg: "The app is installed. <b>Please open the app from your home screen</b> and browse the maps there to save them for offline use.",
+		installSuccessMsg:
+			"The app is installed. <b>Please open the app from your home screen</b> and browse the maps there to save them for offline use.",
 		firstRunTitle: "Offline Mode Tips",
-		firstRunMsg: "While you are online, browse the areas on the map you want to access later. This will save them for offline use.",
+		firstRunMsg:
+			"While you are online, browse the areas on the map you want to access later. This will save them for offline use.",
+		locTapped: "Selected Location",
+		netOnline: "Online",
+		netOffline: "Offline (Saved maps only)",
+		legendTitle: "Map Legend",
+		legPlenty: "Functional / Plenty Water",
+		legModerate: "Moderate Water",
+		legScarce: "Scarce / Low Water",
+		legNone: "Dry / Broken",
+		legContaminated: "Contaminated (Unsafe!)",
+		btnGotIt: "Got it",
 		cityAleppo: "Aleppo",
 		cityRaqqa: "Raqqa",
 		cityDeir: "Deir ez-Zor",
@@ -96,7 +127,8 @@ const translations = {
 		note_well_A: "New pump installed last month.",
 		note_well_B: "Engine needs servicing, water levels are low.",
 		note_well_C: "Has been dry for 3 months now. Urgent need for new source.",
-		note_well_D: "Smells bad, villagers are getting sick. Investigation needed.",
+		note_well_D:
+			"Smells bad, villagers are getting sick. Investigation needed.",
 		popupStaticTitle: "Well in {village}",
 	},
 	ar: {
@@ -109,7 +141,8 @@ const translations = {
 		reportUpdateBtn: "تحديث التقرير",
 		modalUpdateReport: "تحديث التقرير",
 		modalNewWell: "بئر جديد",
-		modalDesc: "يرجى مشاركة المعلومات حول بئر الماء في {villageName}. <br>يمكنك تحريك الدبوس إذا كان في موقع خاطئ.",
+		modalDesc:
+			"يرجى مشاركة المعلومات حول بئر الماء في {villageName}. <br>يمكنك تحريك الدبوس إذا كان في موقع خاطئ.",
 		modalCondition: "الحالة",
 		conditionFunctional: "✔ الأعمال",
 		conditionNeedsRepair: "🔧للإصلاح",
@@ -141,7 +174,8 @@ const translations = {
 		modalConsent: "أوافق على مشاركة هذه المعلومات.",
 		submitReportBtn: "إرسال التقرير",
 		thankYouMessage: `شكراً لك. تقريرك يساعد في تحسين الوصول إلى المياه في مجتمعك.<br><br>إذا كنت غير متصل بالإنترنت، فسيتم حفظ تقريرك وإرساله عندما تعود إلى الاتصال بالإنترنت.`,
-		offlineMessage: "لا يوجد اتصال بالإنترنت؟ تم حفظ تقريرك وسيتم إرساله عندما تكون متصلاً بالإنترنت.",
+		offlineMessage:
+			"لا يوجد اتصال بالإنترنت؟ تم حفظ تقريرك وسيتم إرساله عندما تكون متصلاً بالإنترنت.",
 		popupStatus: ":الحالة",
 		popupAvailability: ":التوفر",
 		popupQuality: ":الجودة",
@@ -156,9 +190,21 @@ const translations = {
 		installBtn: "تثبيت",
 		manualInstallBtn: "📲 تثبيت التطبيق",
 		installSuccessTitle: "تم تثبيت التطبيق!",
-		installSuccessMsg: "تم التثبيت. <b>يرجى فتح التطبيق من الشاشة الرئيسية</b> وتصفح الخرائط بداخله لحفظها للاستخدام دون إنترنت.",
+		installSuccessMsg:
+			"تم التثبيت. <b>يرجى فتح التطبيق من الشاشة الرئيسية</b> وتصفح الخرائط بداخله لحفظها للاستخدام دون إنترنت.",
 		firstRunTitle: "نصائح وضع عدم الاتصال",
-		firstRunMsg: "أثناء اتصالك بالإنترنت، تصفح المناطق التي تريد الوصول إليها لاحقاً على الخريطة. سيؤدي هذا إلى حفظها تلقائياً.",
+		firstRunMsg:
+			"أثناء اتصالك بالإنترنت، تصفح المناطق التي تريد الوصول إليها لاحقاً على الخريطة. سيؤدي هذا إلى حفظها تلقائياً.",
+		locTapped: "الموقع المحدد",
+		netOnline: "متصل",
+		netOffline: "غير متصل (الخرائط المحفوظة فقط)",
+		legendTitle: "مفتاح الخريطة",
+		legPlenty: "يعمل / مياه وفيرة",
+		legModerate: "مياه متوسطة",
+		legScarce: "مياه شحيحة",
+		legNone: "جاف / معطل",
+		legContaminated: "ملوث (غير آمن!)",
+		btnGotIt: "حسناً",
 		cityAleppo: "حلب",
 		cityRaqqa: "الرقة",
 		cityDeir: "دير الزور",
@@ -179,7 +225,8 @@ const translations = {
 		reportUpdateBtn: "Rapora Nû bike",
 		modalUpdateReport: "Rapora Nû bike",
 		modalNewWell: "Bîra Nû",
-		modalDesc: "Ji kerema xwe agahdariya der barê bîra avê ya li {villageName} parve bikin. <br>Hûn dikarin pîneyê biguherînin ger ew li cîhek xelet be.",
+		modalDesc:
+			"Ji kerema xwe agahdariya der barê bîra avê ya li {villageName} parve bikin. <br>Hûn dikarin pîneyê biguherînin ger ew li cîhek xelet be.",
 		modalCondition: "Rewş",
 		conditionFunctional: "✔ Kar dike",
 		conditionNeedsRepair: "🔧 Ji bo tamîrê",
@@ -211,7 +258,8 @@ const translations = {
 		modalConsent: "Ez razî me ku ez vê agahiyê parve bikim.",
 		submitReportBtn: "Raporê Bişîne",
 		thankYouMessage: `Spas. Rapora we alîkariyê dide baştirkirina gihîştina avê li civata we.<br><br>Heke hûn ne serhêl bin, rapora we tê tomarkirin û dema ku hûn dîsa serhêl bibin dê were şandin.`,
-		offlineMessage: "Înternet tune ye? Rapora we tê tomarkirin û dema ku hûn bikevin ser înternetê dê were şandin.",
+		offlineMessage:
+			"Înternet tune ye? Rapora we tê tomarkirin û dema ku hûn bikevin ser înternetê dê were şandin.",
 		popupStatus: "Rewş:",
 		popupAvailability: "Berdestbûn:",
 		popupQuality: "Kalîte:",
@@ -219,16 +267,29 @@ const translations = {
 		popupDepth: "Kûrahî:",
 		popupNotes: "Têbînî:",
 		alertCurrentLocationError: "Nikare cîhê weya heyî bistîne.",
-		alertGeolocationNotSupported: "Cîhê erdnîgarî ji hêla geroka we ve nayê piştgirî kirin.",
+		alertGeolocationNotSupported:
+			"Cîhê erdnîgarî ji hêla geroka we ve nayê piştgirî kirin.",
 		alertTapMapPrompt: "Li ser nexşeyê bikirtînin da ku bîrek nû bi cîh bikin.",
 		alertLocationNotFound: "Cîh li Sûriyê nehat dîtin",
 		installBanner: `<b>Ji bo tomarkirinê saz bike</b><br><br>Nexşeyên ku li vir têne dîtin nayên tomarkirin.<br>Sepanê saz bike, veke û <i>paşê</i> nexşeyê bigerîne da ku offline bixebite.`,
 		installBtn: "Sepîyê bike",
 		manualInstallBtn: "📲 Sepanê Saz Bike",
 		installSuccessTitle: "Sepan hat saz kirin!",
-		installSuccessMsg: "Sepan hat saz kirin. <b>Ji kerema xwe sepanê vekin</b> û nexşeyan li wir bigerînin da ku ji bo offline werin tomarkirin.",
+		installSuccessMsg:
+			"Sepan hat saz kirin. <b>Ji kerema xwe sepanê vekin</b> û nexşeyan li wir bigerînin da ku ji bo offline werin tomarkirin.",
 		firstRunTitle: "Şîretên Offline",
-		firstRunMsg: "Dema ku hûn serhêl in, deverên li ser nexşeyê ku hûn dixwazin paşê bigihîjin wan bigerînin. Ev ê wan ji bo offline tomar bike.",
+		firstRunMsg:
+			"Dema ku hûn serhêl in, deverên li ser nexşeyê ku hûn dixwazin paşê bigihîjin wan bigerînin. Ev ê wan ji bo offline tomar bike.",
+		locTapped: "Cihê Hilbijartî",
+		netOnline: "Serhêl",
+		netOffline: "Oflîn (Tenê nexşeyên tomarkirî)",
+		legendTitle: "Mifteya Nexşeyê",
+		legPlenty: "Kar dike / Av Pir e",
+		legModerate: "Av Navîn e",
+		legScarce: "Av Kêm e",
+		legNone: "Zuwa / Xerabûyî",
+		legContaminated: "Pîs (Ne ewle!)",
+		btnGotIt: "Fêm kir",
 		cityAleppo: "Heleb",
 		cityRaqqa: "Reqa",
 		cityDeir: "Dêra Zorê",
@@ -236,7 +297,8 @@ const translations = {
 		note_well_A: "Meha borî pompeyek nû hate saz kirin.",
 		note_well_B: "Pêdiviya motorê bi servîsê heye, asta avê kêm e.",
 		note_well_C: "Ev 3 meh in zuwa bûye. Pêdivî bi çavkaniyek nû heye.",
-		note_well_D: "Bêhna wê nexweş e, gundî nexweş dikevin. Pêdivî bi lêkolînê heye.",
+		note_well_D:
+			"Bêhna wê nexweş e, gundî nexweş dikevin. Pêdivî bi lêkolînê heye.",
 		popupStaticTitle: "Bîra li {village}",
 	},
 };
@@ -343,7 +405,9 @@ function handleMapTapForNewWell(e) {
 		map.removeLayer(tempMarker);
 	}
 
-	tempMarker = L.marker(e.latlng, { icon: ICON_BLUE, draggable: true }).addTo(map);
+	tempMarker = L.marker(e.latlng, { icon: ICON_BLUE, draggable: true }).addTo(
+		map
+	);
 
 	tempMarker.on("dragend", function (event) {
 		const marker = event.target;
@@ -353,9 +417,7 @@ function handleMapTapForNewWell(e) {
 
 	currentWellCoords = [e.latlng.lat, e.latlng.lng];
 	// Small delay to ensure modal is ready
-	setTimeout(() => {
-		openModal("Tapped Location", "", [e.latlng.lat, e.latlng.lng]);
-	}, 100);
+	openModal("locTapped", "", [e.latlng.lat, e.latlng.lng]);
 
 	map.off("click", handleMapTapForNewWell);
 }
@@ -498,10 +560,10 @@ function submitReport() {
 		newWell.marker = m;
 	}
 
-    // FIX: CIRCULAR JSON ERROR
-    // We remove the circular logic by filtering out the 'marker' key before saving
-    saveWellsToStorage();
-	  map.closePopup(); 
+	// FIX: CIRCULAR JSON ERROR
+	// We remove the circular logic by filtering out the 'marker' key before saving
+	saveWellsToStorage();
+	map.closePopup();
 
 	const t = translations[currentLanguage];
 	modalContent.innerHTML = `
@@ -522,11 +584,11 @@ window.submitReport = submitReport;
             HELPER FUNCTIONS
 ----------------------------*/
 function saveWellsToStorage() {
-    // FIX: Remove 'marker' property before stringifying to avoid circular error
-    const dataToSave = wells.map(well => {
-        const { marker, ...rest } = well; 
-        return rest;
-    });
+	// FIX: Remove 'marker' property before stringifying to avoid circular error
+	const dataToSave = wells.map(well => {
+		const { marker, ...rest } = well;
+		return rest;
+	});
 	localStorage.setItem("wellsData", JSON.stringify(dataToSave));
 }
 
@@ -534,7 +596,7 @@ function loadWellsFromStorage() {
 	const stored = localStorage.getItem("wellsData");
 	if (stored) {
 		const parsed = JSON.parse(stored);
-        // Ensure no marker property is loaded (it's null by default anyway)
+		// Ensure no marker property is loaded (it's null by default anyway)
 		parsed.forEach(w => (w.marker = null));
 		wells.length = 0;
 		wells.push(...parsed);
@@ -604,7 +666,7 @@ function setLanguage(lang) {
 	}
 
 	updateAllWellPopups();
-	
+
 	if (modalBg && modalBg.style.display === "flex") {
 		resetForm();
 	}
@@ -612,8 +674,16 @@ function setLanguage(lang) {
 
 function updateAllWellPopups() {
 	wells.forEach(w => {
-		if (w.marker) {
-			w.marker.setPopupContent(createWellPopupContent(w));
+		if (!w.marker) {
+			// ZMIANA: Przekazujemy cały obiekt 'w', żeby sprawdzić też jakość wody
+			const iconToUse = chooseIcon(w);
+			const m = L.marker(w.coords, { icon: iconToUse }).addTo(map);
+			m.bindPopup(createWellPopupContent(w), {
+				closeButton: true,
+				autoPan: false,
+				autoPanPadding: L.point(10, 80),
+			});
+			w.marker = m;
 		}
 	});
 }
@@ -705,7 +775,7 @@ function resetForm() {
 	const t = translations[currentLanguage];
 	const translatedVillageName = t[currentVillageName] || currentVillageName;
 
-    // FIX: Layout Order -> Header, then Map, then Form
+	// FIX: Layout Order -> Header, then Map, then Form
 	modalContent.innerHTML = `
         <div class="modal-header-controls">
             <h2>${wellToEdit ? t.modalUpdateReport : t.modalNewWell}</h2>
@@ -940,6 +1010,91 @@ document.addEventListener("DOMContentLoaded", () => {
 			alert(translations[currentLanguage].alertTapMapPrompt);
 			map.on("click", handleMapTapForNewWell);
 		});
+
+		// --- 6. NETWORK STATUS INDICATOR ---
+		const netStatusDiv = document.createElement("div");
+		netStatusDiv.className = "network-status";
+		document.body.appendChild(netStatusDiv);
+
+		function updateNetworkStatus() {
+			const t = translations[currentLanguage];
+			const isOnline = navigator.onLine;
+			netStatusDiv.className = isOnline
+				? "network-status online"
+				: "network-status offline";
+			netStatusDiv.innerHTML = `
+            <div class="status-dot"></div>
+            <span>${isOnline ? t.netOnline : t.netOffline}</span>
+        `;
+		}
+
+		window.addEventListener("online", updateNetworkStatus);
+		window.addEventListener("offline", updateNetworkStatus);
+		// Wywołaj raz na start (z małym opóźnieniem, żeby tłumaczenia się załadowały)
+		setTimeout(updateNetworkStatus, 500);
+
+		// --- 7. LEGEND POPUP (ONE TIME) ---
+		const hasSeenLegend = localStorage.getItem("hasSeenLegend");
+		if (!hasSeenLegend) {
+			setTimeout(showLegend, 1500); // Pokaż po 1.5 sekundy
+		}
+
+		function showLegend() {
+			const t = translations[currentLanguage];
+
+			// Definicje pinezek jako obrazki (dokładnie te same co na mapie)
+			// Używamy encodeURIComponent dla bezpieczeństwa wyświetlania
+			const pinSvg = color =>
+				`data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='${color}' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3C/svg%3E`;
+
+			// Specjalna pinezka fioletowa z kropką
+			const purpleSvg = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='%239333ea' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3Ccircle cx='12' cy='12' r='4' fill='white' opacity='0.5'/%3E%3C/svg%3E`;
+
+			// Kolory (zakodowane dla URL - %23 to #)
+			const imgBlue = pinSvg("%231D4ED8");
+			const imgLight = pinSvg("%2360A5FA");
+			const imgOrange = pinSvg("%23F59E0B");
+			const imgRed = pinSvg("%23DC2626");
+			const imgPurple = purpleSvg;
+
+			const legendHTML = `
+            <div class="legend-overlay" id="legendOverlay">
+                <div class="legend-card">
+                    <h2 style="color:#001d6e; margin-top:0; margin-bottom: 20px;">${t.legendTitle}</h2>
+                    
+                    <div class="legend-item">
+                        <img src="${imgBlue}" class="legend-icon-img">
+                        <span>${t.legPlenty}</span>
+                    </div>
+                    <div class="legend-item">
+                        <img src="${imgLight}" class="legend-icon-img">
+                        <span>${t.legModerate}</span>
+                    </div>
+                    <div class="legend-item">
+                        <img src="${imgOrange}" class="legend-icon-img">
+                        <span>${t.legScarce}</span>
+                    </div>
+                    <div class="legend-item">
+                        <img src="${imgRed}" class="legend-icon-img">
+                        <span>${t.legNone}</span>
+                    </div>
+                    <div class="legend-item">
+                        <img src="${imgPurple}" class="legend-icon-img">
+                        <span style="color:#9333ea; font-weight:bold;">${t.legContaminated}</span>
+                    </div>
+
+                    <button class="submit-btn" style="margin-top:20px;" onclick="window.closeLegend()">${t.btnGotIt}</button>
+                </div>
+            </div>
+        `;
+			document.body.insertAdjacentHTML("beforeend", legendHTML);
+		}
+
+		window.closeLegend = function () {
+			const overlay = document.getElementById("legendOverlay");
+			if (overlay) overlay.remove();
+			localStorage.setItem("hasSeenLegend", "true");
+		};
 	}
 
 	document
@@ -1039,4 +1194,3 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	}
 });
-
