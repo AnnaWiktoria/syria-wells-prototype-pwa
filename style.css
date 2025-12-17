@@ -1,3 +1,4 @@
+
 /* =========================================
    DESIGN SYSTEM (CSS VARIABLES)
    ========================================= */
@@ -761,35 +762,44 @@ label {
 }
 
 /* --- IKONA OFFLINE PRZY PINEZCE --- */
-/* --- IKONA OFFLINE PRZY PINEZCE --- */
+/* --- IKONA OFFLINE NA PINEZCE (Styl Odznaki) --- */
 .custom-pin-icon {
 	position: relative;
 	overflow: visible !important;
 }
 
 .custom-pin-icon.offline-pending::after {
-	content: "🔄"; /* ZMIANA: Strzałki zamiast klepsydry */
+	content: "🔄";
+	/* Pozycjonowanie: Prawy górny róg "głowy" pinezki */
 	position: absolute;
-	bottom: -5px;
-	right: -8px;
+	top: -2px;
+	right: -2px;
 
-	background-color: #fff;
-	border: 1px solid #ccc;
+	/* Wygląd kółeczka */
+	background-color: #ffffff;
+	border: 1px solid #001d6e; /* Granatowa ramka pasująca do stylu */
 	border-radius: 50%;
 
-	width: 18px;
-	height: 18px;
-	font-size: 12px;
-	line-height: 18px;
-	text-align: center;
+	/* Rozmiar i centrowanie */
+	width: 15px;
+	height: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
+	/* Typografia ikonki */
+	font-size: 10px;
+	line-height: 1;
+
+	/* Cień dla głębi */
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 	z-index: 1000;
 }
 
+/* Wersja Arabska (RTL) - znaczek po lewej */
 html[dir="rtl"] .custom-pin-icon.offline-pending::after {
 	right: auto;
-	left: -8px;
+	left: -2px;
 }
 /* =========================================
    RTL ADAPTATION (ARABIC/KURDISH)
