@@ -760,6 +760,37 @@ label {
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%239333ea" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/><circle cx="12" cy="12" r="4" fill="white" opacity="0.5"/></svg>');
 }
 
+/* --- IKONA OFFLINE PRZY PINEZCE --- */
+/* --- IKONA OFFLINE PRZY PINEZCE --- */
+.custom-pin-icon {
+	position: relative;
+	overflow: visible !important;
+}
+
+.custom-pin-icon.offline-pending::after {
+	content: "🔄"; /* ZMIANA: Strzałki zamiast klepsydry */
+	position: absolute;
+	bottom: -5px;
+	right: -8px;
+
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+
+	width: 18px;
+	height: 18px;
+	font-size: 12px;
+	line-height: 18px;
+	text-align: center;
+
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+}
+
+html[dir="rtl"] .custom-pin-icon.offline-pending::after {
+	right: auto;
+	left: -8px;
+}
 /* =========================================
    RTL ADAPTATION (ARABIC/KURDISH)
    ========================================= */
