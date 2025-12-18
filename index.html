@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 
-
     <link rel="icon" href="data:,">
 
 </head>
@@ -43,13 +42,11 @@
 
     <div id="map"></div>
 
-    <!-- MENU PRZYCISKÓW -->
+    <!-- BUTTONS -->
     <div class="floating-buttons-container">
         <div class="add-well-options" id="addWellOptions">
             <button id="addWellCurrentLocationBtn" data-key="addCurrentLocationBtn">📍 Add at Current Location</button>
             <button id="addWellTapMapBtn" data-key="addTapMapBtn">👆 Add by Tapping Map</button>
-
-            <!-- PRZYCISK RĘCZNEJ INSTALACJI (Pojawi się tylko, gdy PWA będzie gotowe) -->
             <button id="manualInstallBtn">📲 Install
                 App</button>
 
@@ -58,14 +55,14 @@
         <button id="mainAddWellBtn" data-key="addWellBtn">Add Well</button>
     </div>
 
-    <!-- MODAL RAPORTU -->
+    <!-- MODAL REPORT -->
     <div id="modalBg" class="modal-bg">
         <div id="modalContent" class="modal">
             <!-- Treść wstawiana przez JS -->
         </div>
     </div>
 
-    <!-- PWA INSTALL BANNER (Tylko jeden!) -->
+    <!-- PWA INSTALL BANNER -->
     <div id="installBanner" style="display:none;">
         <button id="closeInstallBanner" class="banner-close-btn">&times;</button>
         <span id="installText"></span>
@@ -90,3 +87,4 @@
 
 
 </html>
+
