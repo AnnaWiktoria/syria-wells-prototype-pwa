@@ -1,0 +1,74 @@
+# Syria Well Map – Offline-First Prototype
+
+## Project overview
+
+A lightweight, offline-first web application for mapping and reporting the status of water wells in conflict-affected areas.
+Designed for field use with unstable connectivity and low-end mobile devices.
+
+## Context
+Syria is facing chronic shortages of drinking water, and water infrastructure has been severely damaged by conflict in many places. 
+Lack of access to repaired energy is disrupting the lives of millions of residents. The situation is unstable, and security is at risk.
+
+## Problems
+
+- Intermittent or no internet access in the field
+- High risk of misinterpretation of outdated or incomplete data
+- Users may not trust their own technical competence.
+- Extreme environmental conditions (sun, dust, high contrast surroundings)
+
+
+## Solution
+
+- Offline-first PWA approach
+- Local data storage using IndexedDB
+- Clear visual status markers for wells
+- Explicit communication of data freshness and connectivity state
+- The application prioritizes clarity, safety, and reliability over visual complexity.
+
+
+## Key UX & UX-Security decisions
+
+- No user accounts or authentication (reduced attack surface)
+- Explicit online / offline indicator
+- Last update timestamp visible for each well
+- Visual differentiation between:
+- Non-functional wells
+- Contaminated water
+- Wells modified offline (pending sync)
+- One-time legend shown on first launch to reduce cognitive load later
+- Emoji-based symbols instead of icon fonts for faster recognition and better performance
+
+
+## Offline behavior
+
+- Maps are available offline only for areas previously opened while online
+- Reports created offline are stored locally and synced when connectivity is restored
+- Offline changes are clearly marked in the interface
+
+
+## Limitations
+
+- Not all map tiles are available offline by default
+- Prototype version — data validation and verification workflows are limited
+- Not intended for real-time emergency decision-making
+
+
+## Project status
+
+Prototype
+User testing and translation review in progress.
+
+
+## Tech stack
+
+- HTML / CSS / JavaScript
+- Leaflet
+- IndexedDB
+- Service Worker
+- PWA
+
+
+## Disclaimer
+
+This is a prototype created for research, testing, and demonstration purposes.
+It should not be used as the sole source of information for critical or emergency decisions.
