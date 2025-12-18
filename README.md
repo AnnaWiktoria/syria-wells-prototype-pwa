@@ -1,5 +1,13 @@
 # Syria Well Map – Offline-First Prototype
 
+![Status](https://img.shields.io/badge/Status-Prototype-blue)
+![Performance](https://img.shields.io/badge/Lighthouse-99%2F100-success)
+![Interactive](https://img.shields.io/badge/Time_to_Interactive-0ms-green)
+![Size](https://img.shields.io/badge/App_Size-~102KB-yellow)
+
+
+
+
 ## Project overview
 
 A lightweight, offline-first web application for mapping and reporting the status of water wells in conflict-affected areas.
