@@ -14,6 +14,8 @@ Lack of access to repaired energy is disrupting the lives of millions of residen
 - Intermittent or no internet access in the field
 - High risk of misinterpretation of outdated or incomplete data
 - Users may not trust their own technical competence.
+- Language barriers: The interface must support both Latin (English/Kurdish) and Arabic (Right-to-Left) scripts seamlessly.
+- Cognitive load: In high-stress situations, the UI must be clear, high-contrast, and forgiving.
 - Extreme environmental conditions (sun, dust, high contrast surroundings)
 
 
@@ -38,6 +40,12 @@ Lack of access to repaired energy is disrupting the lives of millions of residen
 - One-time legend shown on first launch to reduce cognitive load later
 - Emoji-based symbols instead of icon fonts for faster recognition and better performance
 
+## Inclusive & Accessible Design
+- RTL Adaptation:The interface automatically mirrors itself (margins, icons, text direction) when switching to Arabic.
+- Typography: Arabic fonts are dynamically scaled up and line-height is increased to ensure legibility compared to Latin script.
+- Color Blindness Safety: The "Contaminated" pin uses a distinct shape (internal dot) + color (Purple) to ensure safety warnings are visible to everyone.
+- High contrast for readability.
+
 
 ## Offline behavior
 
@@ -61,11 +69,10 @@ User testing and translation review in progress.
 
 ## Tech stack
 
-- HTML / CSS / JavaScript
-- Leaflet
-- IndexedDB
-- Service Worker
-- PWA
+- Core: HTML5, CSS3 (CSS Variables, Flexbox/Grid), Vanilla JavaScript (ES6+).
+- Mapping: Leaflet.js.
+- Storage: LocalStorage (simulating database persistence).
+- PWA: Service Workers, Manifest.json.
 
 
 ## Disclaimer
