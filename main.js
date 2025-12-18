@@ -173,9 +173,9 @@ const translations = {
         netOnline: "Online",
         netOffline: "Offline (Saved maps only)",
         legendTitle: "Map Legend",
-        legPlenty: "Functional / Plenty Water",
+        legPlenty: "Plenty Water",
         legModerate: "Moderate Water",
-        legScarce: "Scarce / Low Water",
+        legScarce: "Low Water",
         legNone: "Dry / Broken",
         legContaminated: "Contaminated (Unsafe!)",
         btnGotIt: "Got it",
@@ -1152,4 +1152,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
 
