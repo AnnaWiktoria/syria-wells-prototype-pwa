@@ -3,7 +3,7 @@
    DESIGN SYSTEM (CSS VARIABLES)
    ========================================= */
 :root {
-	/* --- PALETA KOLORÓW --- */
+	/* --- COLORS--- */
 	--color-primary: #001d6e; /* Główny granat */
 	--color-primary-dark: #011241; /* Ciemniejszy granat (hover) */
 	--color-primary-light: #e6effc; /* Bardzo jasny błękit (tła aktywne) */
@@ -20,7 +20,7 @@
 	--color-border-light: #f0f0f0;
 	--color-border-focus: rgba(0, 29, 110, 0.2);
 
-	/* --- TYPOGRAFIA --- */
+	/* --- TYPOGRAPHY --- */
 	--font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Helvetica, Arial, sans-serif;
 
@@ -165,7 +165,7 @@ html {
 .search-input::placeholder {
 	color: gray;
 }
-/* --- 2. LEGENDA (POPUP STARTOWY) --- */
+/* --- 2. MAP LEGEND --- */
 .legend-overlay {
 	position: fixed;
 	top: 0;
@@ -223,7 +223,7 @@ html[dir="rtl"] .legend-icon {
 	margin-left: 15px;
 }
 
-/* --- 3. STATUS SIECI (MALEŃKI PASEK) --- */
+/* --- NETWORK STATUS - UI --- */
 .network-status {
 	position: fixed;
 	top: 130px; /* Zaraz pod nagłówkiem */
@@ -436,7 +436,7 @@ html[dir="rtl"] .legend-icon {
 	overflow-y: visible !important; /* Wyłączamy wewnętrzny scroll */
 	height: auto !important;
 }
-/* --- ULEPSZENIE: ANIMACJA WEJŚCIA MODALA --- */
+
 @keyframes modalSlideUp {
 	from {
 		opacity: 0;
@@ -606,7 +606,7 @@ label {
 	height: 20px;
 	margin-right: 10px;
 }
-/* --- ESTETYCZNY PASEK PRZEWIJANIA (SCROLLBAR) --- */
+/* --- scrollbar --- */
 
 /* Stylizacja dla Chrome, Safari, Edge */
 .modal::-webkit-scrollbar {
@@ -630,7 +630,6 @@ label {
 	border-radius: 20px; /* Zaokrąglony suwak */
 }
 
-/* Opcjonalnie: ukrycie paska w Firefox (tam trudniej o stylizację) */
 .modal {
 	scrollbar-width: thin;
 	scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
@@ -761,8 +760,8 @@ label {
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36"><path fill="%239333ea" d="M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z"/><circle cx="12" cy="12" r="4" fill="white" opacity="0.5"/></svg>');
 }
 
-/* --- IKONA OFFLINE PRZY PINEZCE --- */
-/* --- IKONA OFFLINE NA PINEZCE (Styl Odznaki) --- */
+
+/* --- OFFLINE STATUS - PIN --- */
 .custom-pin-icon {
 	position: relative;
 	overflow: visible !important;
@@ -770,33 +769,25 @@ label {
 
 .custom-pin-icon.offline-pending::after {
 	content: "🔄";
-	/* Pozycjonowanie: Prawy górny róg "głowy" pinezki */
 	position: absolute;
 	top: -2px;
 	right: -2px;
-
-	/* Wygląd kółeczka */
+	/* circle */
 	background-color: #ffffff;
-	border: 1px solid #001d6e; /* Granatowa ramka pasująca do stylu */
+	border: 1px solid #001d6e; 
 	border-radius: 50%;
-
-	/* Rozmiar i centrowanie */
 	width: 15px;
 	height: 15px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	/* Typografia ikonki */
 	font-size: 10px;
 	line-height: 1;
-
-	/* Cień dla głębi */
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 	z-index: 1000;
 }
 
-/* Wersja Arabska (RTL) - znaczek po lewej */
+/* ar (RTL) - */
 html[dir="rtl"] .custom-pin-icon.offline-pending::after {
 	right: auto;
 	left: -2px;
@@ -1023,3 +1014,4 @@ html[dir="rtl"] .banner-close-btn {
 html[dir="rtl"] #installBanner {
 	text-align: right;
 }
+
