@@ -1021,8 +1021,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const t = translations[currentLanguage];
     const pinSvg = (color) => `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='${color}' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3C/svg%3E`;
         
-        // purple pin with ⚠️
-        const purpleSvg = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='%239333ea' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3Ctext x='12' y='17' font-size='12' text-anchor='middle'%3E⚠️%3C/text%3E%3C/svg%3E`;
+        // purple pin with 🤢
+        const purpleSvg = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='%239333ea' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3Ctext x='12' y='17' font-size='12' text-anchor='middle'%3E🤢%3C/text%3E%3C/svg%3E`;
 
         const imgBlue = pinSvg('%231D4ED8');
         const imgLight = pinSvg('%2360A5FA');
@@ -1154,6 +1154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
 
 
 
