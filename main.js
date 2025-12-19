@@ -131,7 +131,7 @@ const translations = {
         modalWaterQuality: "Water Quality",
         qualityClear: "✨ Clear",
         qualityMuddy: "🟫 Muddy",
-        qualitySmelly: "👃 Smelly",
+        qualitySmelly: "🫢 Smelly",
         qualityContaminated: "🤢 Contaminated",
         modalWellType: "Well Type (optional)",
         typeHandpump: "🖐️ Hand pump",
@@ -220,7 +220,7 @@ const translations = {
         modalWaterQuality: "جودة المياه",
         qualityClear: "✨ صافية",
         qualityMuddy: "🟫 موحلة",
-        qualitySmelly: "👃 كريهة الرائحة",
+        qualitySmelly: "🫢 كريهة الرائحة",
         qualityContaminated: "🤢 ملوثة",
         modalWellType: "نوع البئر (اختياري)",
         typeHandpump: "🖐️ مضخة يدوية",
@@ -310,7 +310,7 @@ const translations = {
         modalWaterQuality: "Kalîteya Avê",
         qualityClear: "✨ Zelal",
         qualityMuddy: "🟫 Herî",
-        qualitySmelly: "👃 Bêhnxweş",
+        qualitySmelly: "🫢 Bêhnxweş",
         qualityContaminated: "🤢 Pîs",
         modalWellType: "Cureya Bîrê (vebijarkî)",
         typeHandpump: "🖐️ Pompa Destan",
@@ -1152,5 +1152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
 
 
