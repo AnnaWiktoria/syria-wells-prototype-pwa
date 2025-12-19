@@ -15,13 +15,13 @@ Designed for field use with unstable connectivity and low-end mobile devices.
 
 ## Context
 Syria is facing chronic shortages of drinking water, and water infrastructure has been severely damaged by conflict in many places. 
-Lack of access to repaired energy is disrupting the lives of millions of residents. The situation is unstable, and security is at risk.
+Lack of access to repaired electricity is disrupting the lives of millions of residents. The situation is unstable and security is at risk.
 
 ## Problems
 
 - Intermittent or no internet access in the field
 - High risk of misinterpretation of outdated or incomplete data
-- Users may not trust their own technical competence.
+- Users may be unfamiliar with technology
 - Language barriers: The interface must support both Latin (English/Kurdish) and Arabic (Right-to-Left) scripts seamlessly.
 - Cognitive load: In high-stress situations, the UI must be clear, high-contrast, and forgiving.
 - Extreme environmental conditions (sun, dust, high contrast surroundings)
@@ -30,7 +30,9 @@ Lack of access to repaired energy is disrupting the lives of millions of residen
 ## Solution
 
 - Offline-first PWA approach
-- Local data storage using IndexedDB
+- Optimized for low-end devices and minimal bandwidth usage
+- No libraries except for the map, only system fonts
+- Offline data storage using LocalStorage
 - Clear visual status markers for wells
 - Explicit communication of data freshness and connectivity state
 - The application prioritizes clarity, safety, and reliability over visual complexity.
