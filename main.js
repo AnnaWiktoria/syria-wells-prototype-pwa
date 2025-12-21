@@ -149,7 +149,8 @@ const translations = {
         additionalNotesPlaceholder: "Any additional information...",
         modalConsent: "I agree to share this information.",
         submitReportBtn: "Submit Report",
-        thankYouMessage: `Thank you. Your report helps improve access to water in your community.<br><br>If you’re offline, your report is saved and will be sent when you’re back online.`,
+        thankYouOnline: "Thank you. Your report has been successfully sent.",
+        thankYouOffline: "Thank you. You are currently offline. Your report has been <b>securely saved</b> on your device and will be sent automatically once you are back online.",
         offlineMessage: "No Internet? Your report is saved and will be sent when you’re online.",
         popupStatus: "Status:",
         popupAvailability: "Availability:",
@@ -238,7 +239,8 @@ const translations = {
         additionalNotesPlaceholder: "أي معلومات إضافية...",
         modalConsent: "أوافق على مشاركة هذه المعلومات.",
         submitReportBtn: "إرسال التقرير",
-        thankYouMessage: `شكراً لك. تقريرك يساعد في تحسين الوصول إلى المياه في مجتمعك.<br><br>إذا كنت غير متصل بالإنترنت، فسيتم حفظ تقريرك وإرساله عندما تعود إلى الاتصال بالإنترنت.`,
+      	thankYouOnline: "شكراً لك. تم إرسال تقريرك بنجاح.",
+        thankYouOffline: "شكراً لك. أنت غير متصل بالإنترنت. تم حفظ تقريرك <b>بأمان</b> على جهازك وسيتم إرساله تلقائياً بمجرد استعادة الاتصال.",
      	offlineMessage:
             "لا يوجد اتصال بالإنترنت؟ تم حفظ تقريرك وسيتم إرساله عندما تكون متصلاً بالإنترنت. ما عليك سوى الضغط على زر ”إرسال التقرير“.",
 	    popupStatus: ":الحالة",
@@ -328,7 +330,8 @@ const translations = {
         additionalNotesPlaceholder: "Her agahdariya din...",
         modalConsent: "Ez razî me ku ez vê agahiyê parve bikim.",
         submitReportBtn: "Raporê Bişîne",
-        thankYouMessage: `Spas. Rapora we alîkariyê dide baştirkirina gihîştina avê li civata we.<br><br>Heke hûn ne serhêl bin, rapora we tê tomarkirin û dema ku hûn dîsa serhêl bibin dê were şandin.`,
+        thankYouOnline: "Spas. Rapora we bi serkeftî hate şandin.",
+        thankYouOffline: "Spas. Hûn niha oflîn in. Rapora we <b>bi ewlehî</b> hate tomarkirin û dema ku hûn dîsa serhêl bibin dê bixweber were şandin.",
         offlineMessage: "Înternet tune ye? Rapora we tê tomarkirin û dema ku hûn bikevin ser înternetê dê were şandin.",
         popupStatus: "Rewş:",
         popupAvailability: "Berdestbûn:",
@@ -763,14 +766,18 @@ function submitReport() {
     map.closePopup();
 
     const t = translations[currentLanguage];
+    const isOnline = navigator.onLine;
+    const finalMessage = isOnline ? t.thankYouOnline : t.thankYouOffline;
+
     modalContent.innerHTML = `
         <div class="modal-header-controls" style="border: none;">
             <div class="close-btn" onclick="window.closeModal()">×</div>
         </div>
-        <div class="thankyou">${t.thankYouMessage}</div>
+        <div class="thankyou">
+            ${finalMessage}
+        </div>
     `;
 }
-
 // 5. Reset Form
 function resetForm() {
     if (!modalContent) return;
@@ -1154,6 +1161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
 
 
 
