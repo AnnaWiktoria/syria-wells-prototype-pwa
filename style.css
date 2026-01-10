@@ -1,4 +1,3 @@
-
 /* =========================================
    DESIGN SYSTEM (CSS VARIABLES)
    ========================================= */
@@ -269,7 +268,8 @@ html[dir="rtl"] .legend-icon {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 10px;
+	gap: 8px;
+	max-width: 90%;
 }
 
 #mainAddWellBtn {
@@ -347,6 +347,60 @@ html[dir="rtl"] .legend-icon {
 
 #cancelAddWellBtn {
 	background: var(--color-text-secondary) !important;
+}
+/* =========================================
+   CLEAR DATA BUTTON (Privacy Feature)
+   ========================================= */
+
+#clearDataBtn {
+	background: #dc2626 !important; /* Czerwony - danger color */
+	color: white;
+	padding: 8px 16px;
+	border-radius: var(--radius-sm);
+	border: none;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	margin-top: 8px;
+	transition: all 0.3s ease;
+	text-align: center;
+	min-width: 180px;
+	box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+	display: none; /* Hidden by default, JS will show if needed */
+}
+
+#clearDataBtn:hover {
+	background: #b91c1c !important; /* Darker red on hover */
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+}
+
+#clearDataBtn:active {
+	transform: scale(0.96);
+	transition: transform 0.1s ease;
+}
+
+/* Dla mobile - mniejszy padding */
+@media (max-width: 500px) {
+	#clearDataBtn {
+		padding: 6px 12px;
+		font-size: 12px;
+		min-width: 160px;
+	}
+}
+#clearDataBtn[style*="display: block"] {
+	animation: slideInButton 0.3s ease-out;
+}
+
+@keyframes slideInButton {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* =========================================
@@ -757,9 +811,8 @@ label {
 }
 
 .custom-pin-icon.purple {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='%239333ea' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3Ctext x='12' y='17' font-size='12' text-anchor='middle'%3E🤢%3C/text%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'%3E%3Cpath fill='%239333ea' d='M12 0c-6.6 0-12 5.4-12 12 0 9 12 24 12 24s12-15 12-24c0-6.6-5.4-12-12-12z'/%3E%3Ctext x='12' y='17' font-size='12' text-anchor='middle'%3E🤢%3C/text%3E%3C/svg%3E");
 }
-
 
 /* --- OFFLINE STATUS - PIN --- */
 .custom-pin-icon {
@@ -774,7 +827,7 @@ label {
 	right: -2px;
 	/* circle */
 	background-color: #ffffff;
-	border: 1px solid #001d6e; 
+	border: 1px solid #001d6e;
 	border-radius: 50%;
 	width: 15px;
 	height: 15px;
@@ -1014,7 +1067,3 @@ html[dir="rtl"] .banner-close-btn {
 html[dir="rtl"] #installBanner {
 	text-align: right;
 }
-
-
-
-
