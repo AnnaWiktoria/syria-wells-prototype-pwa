@@ -98,6 +98,21 @@ This application is designed for use in:
 - **Shared devices**: Easy data clearing for privacy
 - **Unstable infrastructure**: Offline-first prevents data loss
 
+### What We Protect Against
+
+### What We Protect Against
+
+This prototype explicitly mitigates the following threat classes:
+
+- **CDN compromise** — Subresource Integrity (SRI) ensures external libraries cannot be silently altered
+- **Man-in-the-middle attacks** — Enforced HTTPS and integrity verification
+- **Cross-site scripting (XSS)** — Strict Content Security Policy and input sanitization
+- **Supply chain attacks** — Explicit version locking of all third-party dependencies
+- **Credential theft and account takeover** - No authentication by design
+- **Centralized data breaches** - No backend, local-only storage
+- **Misleading UI states leading** to unsafe decisions (explicit offline indicators)
+- **Accidental data exposure** on shared devices (local storage + user-controlled deletion)
+
 ## Limitations
 
 - Not all map tiles are available offline by default
