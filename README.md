@@ -100,8 +100,6 @@ This application is designed for use in:
 
 ### What We Protect Against
 
-### What We Protect Against
-
 This prototype explicitly mitigates the following threat classes:
 
 - **CDN compromise** — Subresource Integrity (SRI) ensures external libraries cannot be silently altered
